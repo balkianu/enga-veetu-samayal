@@ -1,1 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enga Veetu Samayal – South Indian Recipes & Culinary Traditions</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Noto+Serif+Tamil:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  #password-gate {
+    position: fixed; inset: 0; z-index: 9999;
+    background: linear-gradient(135deg, var(--tamarind) 0%, #3D1A05 50%, #6B2D0F 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Lato', sans-serif;
+  }
+  .gate-box {
+    text-align: center; padding: 3rem 2.5rem;
+    border: 1px solid rgba(245,166,35,0.25);
+    background: rgba(0,0,0,0.25);
+    max-width: 380px; width: 90%;
+  }
+  .gate-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; color: var(--turmeric);
+    margin-bottom: 0.25rem;
+  }
+  .gate-logo span { color: #fff; font-style: italic; }
+  .gate-sub {
+    font-family: 'Noto Serif Tamil', serif;
+    font-size: 0.85rem; color: rgba(255,255,255,0.4);
+    margin-bottom: 2rem;
+  }
+  .gate-input {
+    width: 100%; padding: 0.85rem 1.25rem;
+    border: 1px solid rgba(245,166,35,0.3);
+    background: rgba(255,255,255,0.08);
+    color: #fff; font-family: 'Lato', sans-serif;
+    font-size: 1rem; text-align: center;
+    letter-spacing: 0.15em; outline: none;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s;
+  }
+  .gate-input::placeholder { color: rgba(255,255,255,0.25); letter-spacing: 0.05em; }
+  .gate-input:focus { border-color: var(--turmeric); }
+  .gate-input.shake {
+    animation: shake 0.4s ease;
+    border-color: #e74c3c !important;
+  }
+  .gate-btn {
+    width: 100%; padding: 0.85rem;
+    background: var(--saffron); color: #fff; border: none;
+    font-family: 'Lato', sans-serif; font-size: 0.9rem;
+    font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .gate-btn:hover { background: #c9540a; }
+  .gate-error {
+    font-size: 0.8rem; color: #e74c3c;
+    margin-top: 0.75rem; min-height: 1.2em;
+  }
+  .gate-hint { font-size: 0.72rem; color: rgba(255,255,255,0.25); margin-top: 1.5rem; }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+  }
+</style>
 
+<div id="password-gate">
+  <div class="gate-box">
+    <div class="gate-logo"><span>Enga Veetu</span> Samayal</div>
+    <div class="gate-sub">எங்க வீட்டு சமையல்</div>
+    <input type="password" class="gate-input" id="gateInput" placeholder="Enter password" onkeydown="if(event.key==='Enter') checkPassword()">
+    <button class="gate-btn" onclick="checkPassword()">Enter →</button>
+    <div class="gate-error" id="gateError"></div>
+    <div class="gate-hint">Family members only · Contact the admin for access</div>
+  </div>
+</div>
+
+<script>
+  // ── SET YOUR PASSWORD HERE ──────────────────────────────────────
+  const SITE_PASSWORD = 'samayal2025';
+  // ───────────────────────────────────────────────────────────────
+
+  // Check if already authenticated this session
+  if (sessionStorage.getItem('evs-auth') === 'true') {
+    document.getElementById('password-gate').style.display = 'none';
+  }
+
+  function checkPassword() {
+    const input = document.getElementById('gateInput');
+    const error = document.getElementById('gateError');
+    if (input.value === SITE_PASSWORD) {
+      sessionStorage.setItem('evs-auth', 'true');
+      const gate = document.getElementById('password-gate');
+      gate.style.transition = 'opacity 0.4s';
+      gate.style.opacity = '0';
+      setTimeout(() => gate.style.display = 'none', 400);
+    } else {
+      input.classList.remove('shake');
+      void input.offsetWidth; // retrigger animation
+      input.classList.add('shake');
+      input.value = '';
+      error.textContent = 'Incorrect password. Try again.';
+      setTimeout(() => { error.textContent = ''; input.classList.remove('shake'); }, 2000);
+    }
+  }
+</script>
+<style>
+  :root {
+    --saffron: #E8640A;
+    --turmeric: #F5A623;
+    --tamarind: #6B2D0F;
+    --coconut: #FEF9F0;
+    --leaf: #2D6A2D;
+    --cream: #FDF5E8;
+    --charcoal: #1A1209;
+    --warm-gray: #8B7355;
+    --border: rgba(107,45,15,0.15);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--coconut);
+    color: var(--charcoal);
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--tamarind);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem;
+    height: 60px;
+    box-shadow: 0 2px 12px rgba(107,45,15,0.35);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    color: var(--turmeric);
+    letter-spacing: 0.03em;
+  }
+  .nav-logo span { color: #fff; font-style: italic; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--turmeric); }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--tamarind) 0%, #3D1A05 50%, #6B2D0F 100%);
+    min-height: 80vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 70% 50%, rgba(245,166,35,0.12) 0%, transparent 60%);
+  }
+  .hero-pattern {
+    position: absolute; right: 0; top: 0; bottom: 0; width: 50%;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23F5A623' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-text { padding: 4rem 3rem 4rem 5rem; position: relative; z-index: 2; }
+  .hero-eyebrow {
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--turmeric); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--turmeric); }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  .hero-title em { color: var(--turmeric); font-style: italic; }
+  .hero-subtitle {
+    font-family: 'Noto Serif Tamil', serif;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 1.5rem;
+  }
+  .hero-desc {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.7);
+    max-width: 420px;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+  .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--saffron);
+    color: #fff;
+    border: none; padding: 0.75rem 2rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.9rem; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    cursor: pointer; text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #c9540a; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    color: rgba(255,255,255,0.85);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 0.75rem 2rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.9rem; font-weight: 400;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    cursor: pointer; text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--turmeric); color: var(--turmeric); }
+
+  .hero-visual {
+    position: relative; z-index: 2;
+    display: flex; align-items: center; justify-content: center;
+    padding: 3rem;
+  }
+  .hero-img-frame {
+    width: 360px; height: 420px;
+    background: rgba(245,166,35,0.1);
+    border: 1px solid rgba(245,166,35,0.25);
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-img-frame::before {
+    content: '';
+    position: absolute;
+    inset: -12px;
+    border: 1px solid rgba(245,166,35,0.1);
+  }
+  .hero-dish-placeholder {
+    text-align: center;
+    color: rgba(255,255,255,0.3);
+  }
+  .hero-dish-icon { font-size: 5rem; margin-bottom: 1rem; display: block; }
+  .hero-dish-label {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: rgba(245,166,35,0.6);
+  }
+
+  /* STATS STRIP */
+  .stats-strip {
+    background: var(--saffron);
+    display: flex;
+    justify-content: center;
+    gap: 0;
+  }
+  .stat-item {
+    padding: 1.25rem 3rem;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.2);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 700;
+    color: #fff;
+    display: block;
+  }
+  .stat-label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.8); }
+
+  /* SECTIONS */
+  section { padding: 5rem 5rem; }
+  .section-header { text-align: center; margin-bottom: 3.5rem; }
+  .section-eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--saffron); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    color: var(--tamarind);
+    line-height: 1.2;
+  }
+  .section-sub {
+    font-size: 0.95rem; color: var(--warm-gray);
+    max-width: 480px; margin: 1rem auto 0;
+  }
+  .section-divider {
+    width: 60px; height: 3px;
+    background: linear-gradient(to right, var(--saffron), var(--turmeric));
+    margin: 1.25rem auto 0;
+  }
+
+  /* FEATURED CATEGORIES */
+  .categories-bg { background: var(--cream); }
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.5rem;
+  }
+  .category-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    padding: 2rem 1.25rem;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+  .category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(107,45,15,0.12);
+    border-color: var(--saffron);
+  }
+  .category-icon { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
+  .category-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 600;
+    color: var(--tamarind);
+    margin-bottom: 0.25rem;
+  }
+  .category-count { font-size: 0.75rem; color: var(--warm-gray); }
+
+  /* RECIPE CARDS */
+  .recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  .recipe-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .recipe-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(107,45,15,0.14);
+  }
+  .recipe-img {
+    height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .recipe-badge {
+    position: absolute; top: 12px; left: 12px;
+    background: var(--saffron);
+    color: #fff;
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 3px 10px;
+  }
+  .recipe-body { padding: 1.5rem; }
+  .recipe-region {
+    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--saffron); margin-bottom: 0.5rem;
+  }
+  .recipe-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 600;
+    color: var(--tamarind); margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+  .recipe-desc { font-size: 0.88rem; color: var(--warm-gray); line-height: 1.6; margin-bottom: 1rem; }
+  .recipe-meta {
+    display: flex; gap: 1rem;
+    font-size: 0.78rem; color: var(--warm-gray);
+    border-top: 1px solid var(--border); padding-top: 1rem;
+  }
+  .recipe-meta span { display: flex; align-items: center; gap: 0.3rem; }
+  .meta-icon { font-size: 0.85rem; }
+
+  /* TRADITIONS SECTION */
+  .traditions-bg { background: var(--tamarind); color: #fff; }
+  .traditions-bg .section-title { color: var(--turmeric); }
+  .traditions-bg .section-eyebrow { color: rgba(245,166,35,0.7); }
+  .traditions-bg .section-sub { color: rgba(255,255,255,0.6); }
+  .traditions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 1rem;
+  }
+  .tradition-item { display: flex; gap: 1.5rem; align-items: flex-start; }
+  .tradition-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; font-weight: 700;
+    color: rgba(245,166,35,0.2);
+    line-height: 1;
+    min-width: 48px;
+  }
+  .tradition-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 600;
+    color: var(--turmeric); margin-bottom: 0.5rem;
+  }
+  .tradition-text { font-size: 0.9rem; color: rgba(255,255,255,0.65); line-height: 1.75; }
+
+  /* SPICE GUIDE */
+  .spice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+  .spice-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .spice-card::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px;
+  }
+  .spice-card.s1::before { background: #E8640A; }
+  .spice-card.s2::before { background: #F5A623; }
+  .spice-card.s3::before { background: #6B2D0F; }
+  .spice-card.s4::before { background: #2D6A2D; }
+  .spice-card.s5::before { background: #C41E3A; }
+  .spice-card.s6::before { background: #8B4513; }
+  .spice-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+  .spice-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 600;
+    color: var(--tamarind); margin-bottom: 0.35rem;
+  }
+  .spice-tamil { font-family: 'Noto Serif Tamil', serif; font-size: 0.85rem; color: var(--warm-gray); margin-bottom: 0.5rem; }
+  .spice-use { font-size: 0.8rem; color: var(--warm-gray); line-height: 1.6; }
+
+  /* RECIPE SPOTLIGHT */
+  .spotlight { background: var(--cream); }
+  .spotlight-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+  }
+  .spotlight-img {
+    background: linear-gradient(135deg, rgba(232,100,10,0.1), rgba(107,45,15,0.05));
+    border: 1px solid var(--border);
+    height: 380px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 7rem;
+    position: relative;
+  }
+  .spotlight-img::after {
+    content: 'Recipe of the Week';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: var(--saffron); color: #fff;
+    text-align: center; padding: 0.6rem;
+    font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .spotlight-tag {
+    display: inline-block;
+    background: rgba(232,100,10,0.1);
+    color: var(--saffron);
+    font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 4px 12px; margin-bottom: 1rem;
+  }
+  .spotlight-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700;
+    color: var(--tamarind); line-height: 1.2; margin-bottom: 0.5rem;
+  }
+  .spotlight-tamil {
+    font-family: 'Noto Serif Tamil', serif;
+    font-size: 1rem; color: var(--warm-gray); margin-bottom: 1.25rem;
+  }
+  .spotlight-desc { font-size: 0.95rem; color: var(--warm-gray); line-height: 1.8; margin-bottom: 2rem; }
+  .ingredients-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; color: var(--tamarind);
+    margin-bottom: 0.75rem; padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .ingredients-list { list-style: none; margin-bottom: 2rem; }
+  .ingredients-list li {
+    font-size: 0.88rem; color: var(--warm-gray);
+    padding: 0.3rem 0;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .ingredients-list li::before { content: '◆'; font-size: 0.4rem; color: var(--saffron); }
+
+  /* NEWSLETTER */
+  .newsletter { background: var(--saffron); text-align: center; padding: 4rem; }
+  .newsletter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; color: #fff; margin-bottom: 0.75rem;
+  }
+  .newsletter-sub { color: rgba(255,255,255,0.85); margin-bottom: 2rem; font-size: 0.95rem; }
+  .newsletter-form { display: flex; gap: 0; max-width: 480px; margin: 0 auto; }
+  .newsletter-input {
+    flex: 1; padding: 0.85rem 1.25rem;
+    border: none; font-family: 'Lato', sans-serif; font-size: 0.9rem;
+    outline: none; background: rgba(255,255,255,0.95);
+  }
+  .newsletter-btn {
+    background: var(--tamarind); color: #fff;
+    border: none; padding: 0.85rem 1.75rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.85rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .newsletter-btn:hover { background: #2A0E05; }
+
+  /* FOOTER */
+  footer {
+    background: #1A0C04;
+    color: rgba(255,255,255,0.5);
+    padding: 4rem 5rem 2rem;
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem; margin-bottom: 3rem;
+  }
+  .footer-brand .nav-logo { font-size: 1.4rem; display: block; margin-bottom: 1rem; }
+  .footer-brand p { font-size: 0.85rem; line-height: 1.7; }
+  .footer-col-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem; color: rgba(255,255,255,0.8);
+    margin-bottom: 1rem;
+  }
+  .footer-col-links { list-style: none; }
+  .footer-col-links li { margin-bottom: 0.5rem; }
+  .footer-col-links a {
+    color: rgba(255,255,255,0.45);
+    text-decoration: none; font-size: 0.82rem;
+    transition: color 0.2s;
+  }
+  .footer-col-links a:hover { color: var(--turmeric); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.78rem;
+  }
+  .footer-bottom a { color: var(--turmeric); text-decoration: none; }
+
+  /* Modal / Recipe Detail */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(26,12,4,0.85);
+    align-items: center; justify-content: center;
+    padding: 2rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--coconut); max-width: 760px; width: 100%;
+    max-height: 85vh; overflow-y: auto;
+    position: relative;
+  }
+  .modal-header {
+    background: var(--tamarind); padding: 2rem 2.5rem;
+    color: #fff;
+  }
+  .modal-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; }
+  .modal-tamil { font-family: 'Noto Serif Tamil', serif; color: rgba(255,255,255,0.6); margin-top: 0.3rem; }
+  .modal-body { padding: 2rem 2.5rem; }
+  .modal-close {
+    position: absolute; top: 1rem; right: 1rem;
+    background: rgba(255,255,255,0.15); border: none;
+    color: #fff; width: 32px; height: 32px;
+    font-size: 1.1rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .steps-list { list-style: none; }
+  .step {
+    display: flex; gap: 1rem; margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem; border-bottom: 1px solid var(--border);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    background: var(--saffron); color: #fff;
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+  }
+  .step-text { font-size: 0.9rem; color: var(--warm-gray); line-height: 1.7; }
+
+  /* Search */
+  .search-bar { max-width: 600px; margin: 0 auto 4rem; display: flex; }
+  .search-input {
+    flex: 1; padding: 1rem 1.5rem;
+    border: 2px solid var(--border); border-right: none;
+    font-family: 'Lato', sans-serif; font-size: 0.95rem;
+    background: #fff; outline: none; color: var(--charcoal);
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--saffron); }
+  .search-btn {
+    background: var(--saffron); color: #fff; border: none;
+    padding: 1rem 1.75rem; cursor: pointer;
+    font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em;
+    text-transform: uppercase; font-family: 'Lato', sans-serif;
+    transition: background 0.2s;
+  }
+  .search-btn:hover { background: #c9540a; }
+
+  /* HAMBURGER */
+  .hamburger {
+    display: none;
+    flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: rgba(255,255,255,0.85);
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* CATEGORY ACTIVE STATE */
+  .category-card.active {
+    border-color: var(--saffron);
+    box-shadow: 0 0 0 2px var(--saffron);
+    transform: translateY(-4px);
+  }
+  .filter-reset {
+    display: block; margin: 0 auto 2.5rem;
+    background: none; border: 1px solid var(--border);
+    color: var(--warm-gray); padding: 0.5rem 1.5rem;
+    font-family: 'Lato', sans-serif; font-size: 0.8rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .filter-reset:hover { border-color: var(--saffron); color: var(--saffron); }
+  .filter-reset.hidden { visibility: hidden; pointer-events: none; }
+
+  /* FAVOURITES */
+  .fav-btn {
+    position: absolute; top: 12px; right: 12px;
+    background: rgba(255,255,255,0.85); border: none;
+    width: 32px; height: 32px; border-radius: 50%;
+    font-size: 1rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s, background 0.2s;
+    z-index: 2;
+  }
+  .fav-btn:hover { transform: scale(1.15); }
+  .fav-btn.faved { background: #fff0f0; }
+
+  /* NEWSLETTER SUCCESS */
+  .newsletter-success {
+    display: none; color: #fff;
+    font-size: 1rem; margin-top: 1rem; letter-spacing: 0.05em;
+  }
+  .newsletter-success.show { display: block; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .hero-text { padding: 3rem 2rem; }
+    section { padding: 3rem 1.5rem; }
+    .traditions-grid { grid-template-columns: 1fr; }
+    .spotlight-inner { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .stats-strip { flex-wrap: wrap; }
+    nav { padding: 0 1rem; }
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: 0.75rem; }
+    .hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute; top: 60px; left: 0; right: 0;
+      background: var(--tamarind);
+      flex-direction: column; gap: 0;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      z-index: 99;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a {
+      padding: 1rem 1.5rem; font-size: 0.85rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span>Enga Veetu</span> Samayal</div>
+  <div class="nav-links" id="navLinks">
+    <a href="#recipes" onclick="closeNav()">Recipes</a>
+    <a href="#traditions" onclick="closeNav()">Traditions</a>
+    <a href="#spices" onclick="closeNav()">Spice Guide</a>
+    <a href="#spotlight" onclick="closeNav()">Featured</a>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">Authentic South Indian Cooking</p>
+    <h1 class="hero-title">எங்க வீட்டு<br><em>Samayal</em></h1>
+    <p class="hero-subtitle">Our Home Kitchen</p>
+    <p class="hero-desc">Recipes passed down through generations — from the bustling kitchens of Tamil Nadu and Kerala to the spice-filled homes of Andhra and Karnataka. Every dish tells a story.</p>
+    <div class="hero-buttons">
+      <a href="#recipes" class="btn-primary">Explore Recipes</a>
+      <a href="#traditions" class="btn-outline">Our Traditions</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-pattern"></div>
+    <div class="hero-img-frame">
+      <div class="hero-dish-placeholder">
+        <span class="hero-dish-icon">🍛</span>
+        <span class="hero-dish-label">Kollu Rasam & Rice</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stat-item">
+    <span class="stat-number">250+</span>
+    <span class="stat-label">Recipes</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">5</span>
+    <span class="stat-label">Regional Cuisines</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">40+</span>
+    <span class="stat-label">Spice Profiles</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">3</span>
+    <span class="stat-label">Generations</span>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section id="recipes" class="categories-bg">
+  <div class="section-header">
+    <p class="section-eyebrow">Browse by Category</p>
+    <h2 class="section-title">What are you cooking today?</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="category-grid">
+    <div class="category-card" onclick="filterRecipes('rice')">
+      <span class="category-icon">🍚</span>
+      <div class="category-name">Rice &amp; Biriyani</div>
+      <div class="category-count">48 recipes</div>
+    </div>
+    <div class="category-card" onclick="filterRecipes('curry')">
+      <span class="category-icon">🍛</span>
+      <div class="category-name">Curries &amp; Gravies</div>
+      <div class="category-count">65 recipes</div>
+    </div>
+    <div class="category-card" onclick="filterRecipes('tiffin')">
+      <span class="category-icon">🥞</span>
+      <div class="category-name">Tiffin &amp; Breakfast</div>
+      <div class="category-count">42 recipes</div>
+    </div>
+    <div class="category-card" onclick="filterRecipes('rasam')">
+      <span class="category-icon">🥣</span>
+      <div class="category-name">Rasam &amp; Soups</div>
+      <div class="category-count">29 recipes</div>
+    </div>
+    <div class="category-card" onclick="filterRecipes('sweets')">
+      <span class="category-icon">🍮</span>
+      <div class="category-name">Sweets &amp; Desserts</div>
+      <div class="category-count">37 recipes</div>
+    </div>
+    <div class="category-card" onclick="filterRecipes('chutney')">
+      <span class="category-icon">🫙</span>
+      <div class="category-name">Chutneys &amp; Pickles</div>
+      <div class="category-count">31 recipes</div>
+    </div>
+  </div>
+  <button class="filter-reset hidden" id="filterReset" onclick="resetFilter()">✕ Show All Recipes</button>
+</section>
+<section>
+  <div class="section-header">
+    <p class="section-eyebrow">Popular Recipes</p>
+    <h2 class="section-title">Beloved Family Favourites</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="search-bar">
+    <input type="text" class="search-input" id="searchInput" placeholder="Search recipes, ingredients, regions…" oninput="filterCards()">
+    <button class="search-btn">Search</button>
+  </div>
+  <div class="recipe-grid" id="recipeGrid">
+    <!-- Cards injected by JS -->
+  </div>
+</section>
+
+<!-- CULINARY TRADITIONS -->
+<section id="traditions" class="traditions-bg">
+  <div class="section-header">
+    <p class="section-eyebrow">More Than Just Food</p>
+    <h2 class="section-title">The Soul Behind the Samayal</h2>
+    <div class="section-divider" style="background: linear-gradient(to right, #F5A623, #fff3);"></div>
+    <p class="section-sub">South Indian cooking is woven with ritual, season, and story.</p>
+  </div>
+  <div class="traditions-grid">
+    <div class="tradition-item">
+      <div class="tradition-number">01</div>
+      <div>
+        <div class="tradition-title">The Morning Ritual</div>
+        <div class="tradition-text">Dawn begins in a South Indian kitchen with the hiss of mustard seeds in hot oil, the golden bloom of curry leaves, the filling fragrance of filter kaapi. Breakfast is never hurried — it is the sacred start of the day.</div>
+      </div>
+    </div>
+    <div class="tradition-item">
+      <div class="tradition-number">02</div>
+      <div>
+        <div class="tradition-title">Banana Leaf Feasts</div>
+        <div class="tradition-text">A proper sadya or virundu is served on a fresh banana leaf — items placed in a precise order, eaten with the right hand, each dish a counterpart to the next. The leaf itself is an ingredient in the experience.</div>
+      </div>
+    </div>
+    <div class="tradition-item">
+      <div class="tradition-number">03</div>
+      <div>
+        <div class="tradition-title">Festival Foods</div>
+        <div class="tradition-text">Pongal for Pongal, Kozhukattai for Vinayagar Chaturthi, Payasam for every auspicious moment — the calendar of South India is written in sweet and savoury offerings to gods and family alike.</div>
+      </div>
+    </div>
+    <div class="tradition-item">
+      <div class="tradition-number">04</div>
+      <div>
+        <div class="tradition-title">The Art of Tempering</div>
+        <div class="tradition-text">Tadka — or thalikkal — is not an afterthought. The precise moment of adding mustard, urad dal, dried chillies and asafoetida to shimmering oil transforms every dish, adding depth, texture and fragrance unmistakably South Indian.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPICE GUIDE -->
+<section id="spices" style="background: var(--cream)">
+  <div class="section-header">
+    <p class="section-eyebrow">Know Your Pantry</p>
+    <h2 class="section-title">Essential Spices of the South</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="spice-grid">
+    <div class="spice-card s1">
+      <div class="spice-icon">🌶️</div>
+      <div class="spice-name">Dried Red Chilli</div>
+      <div class="spice-tamil">காய்ந்த மிளகாய்</div>
+      <div class="spice-use">The backbone of heat. Used whole in tempering, ground for chilli powder. Kashmiri variety gives colour without excessive heat.</div>
+    </div>
+    <div class="spice-card s2">
+      <div class="spice-icon">🟡</div>
+      <div class="spice-name">Turmeric</div>
+      <div class="spice-tamil">மஞ்சள்</div>
+      <div class="spice-use">Sacred and medicinal. Used in almost every savoury preparation. Fresh root used in festive foods; powder in daily cooking.</div>
+    </div>
+    <div class="spice-card s3">
+      <div class="spice-icon">🌿</div>
+      <div class="spice-name">Curry Leaves</div>
+      <div class="spice-tamil">கறிவேப்பிலை</div>
+      <div class="spice-use">The defining aroma of South Indian cooking. Always used fresh. Added to hot oil at the start of any dish — never a garnish.</div>
+    </div>
+    <div class="spice-card s4">
+      <div class="spice-icon">⚫</div>
+      <div class="spice-name">Mustard Seeds</div>
+      <div class="spice-tamil">கடுகு</div>
+      <div class="spice-use">Added to nearly every dish via tadka. Wait for the pop — that is the moment when oil is ready and flavour blooms.</div>
+    </div>
+    <div class="spice-card s5">
+      <div class="spice-icon">🔴</div>
+      <div class="spice-name">Tamarind</div>
+      <div class="spice-tamil">புளி</div>
+      <div class="spice-use">The sour soul of Tamil cooking. Used in rasam, sambar, puliyodharai, and countless others. Buy in block form, soak and extract.</div>
+    </div>
+    <div class="spice-card s6">
+      <div class="spice-icon">🤍</div>
+      <div class="spice-name">Asafoetida</div>
+      <div class="spice-tamil">பெருங்காயம்</div>
+      <div class="spice-use">A pinch is all it takes. Pungent raw, transformative cooked. Essential in dal, rasam, and for those avoiding onion and garlic.</div>
+    </div>
+  </div>
+</section>
+
+<!-- RECIPE SPOTLIGHT -->
+<section id="spotlight" class="spotlight">
+  <div class="section-header">
+    <p class="section-eyebrow">Step-by-Step Guide</p>
+    <h2 class="section-title">Featured Recipe</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="spotlight-inner">
+    <div class="spotlight-img">🍲</div>
+    <div>
+      <span class="spotlight-tag">Tamil Nadu · Comfort Food</span>
+      <h3 class="spotlight-title">Kollu Rasam</h3>
+      <p class="spotlight-tamil">கொள்ளு ரசம்</p>
+      <p class="spotlight-desc">Horse gram rasam — deeply nutritious and bursting with flavour. This potent, tangy, spiced soup is a winter staple and is served as the second course on a traditional Tamil meal plate.</p>
+      <p class="ingredients-title">Key Ingredients</p>
+      <ul class="ingredients-list">
+        <li>Horse gram (kollu) — 1/2 cup, cooked</li>
+        <li>Tamarind — gooseberry-sized ball</li>
+        <li>Tomatoes — 2 medium</li>
+        <li>Rasam powder — 1.5 tsp</li>
+        <li>Mustard, cumin, dried chilli — for tadka</li>
+        <li>Curry leaves, coriander — to finish</li>
+      </ul>
+      <button class="btn-primary" onclick="openModal('kollu')">View Full Recipe →</button>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h2 class="newsletter-title">Weekly Recipes in Your Inbox</h2>
+  <p class="newsletter-sub">Seasonal dishes, festival specials, and grandmother's secrets — delivered every Friday.</p>
+  <div class="newsletter-form">
+    <input type="email" class="newsletter-input" id="newsletterEmail" placeholder="Your email address">
+    <button class="newsletter-btn" onclick="subscribeNewsletter()">Subscribe</button>
+  </div>
+  <p class="newsletter-success" id="newsletterSuccess">🎉 You're in! Expect your first recipe this Friday.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="nav-logo"><span>Enga Veetu</span> Samayal</span>
+      <p>Celebrating the culinary heritage of South India — one recipe, one story, one memory at a time.</p>
+    </div>
+    <div>
+      <p class="footer-col-title">Recipes</p>
+      <ul class="footer-col-links">
+        <li><a href="#">Tamil Nadu</a></li>
+        <li><a href="#">Kerala</a></li>
+        <li><a href="#">Andhra Pradesh</a></li>
+        <li><a href="#">Karnataka</a></li>
+        <li><a href="#">Telangana</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Learn</p>
+      <ul class="footer-col-links">
+        <li><a href="#">Spice Guide</a></li>
+        <li><a href="#">Cooking Techniques</a></li>
+        <li><a href="#">Festival Calendar</a></li>
+        <li><a href="#">Nutrition Notes</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">About</p>
+      <ul class="footer-col-links">
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Submit a Recipe</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Enga Veetu Samayal</span>
+    <span>Made with ❤️ and ½ tsp asafoetida</span>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <p class="modal-tamil" id="modalTamil"></p>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ── FAVOURITES ──────────────────────────────────────────────────────────────
+let favourites = JSON.parse(localStorage.getItem('evs-favourites') || '[]');
+function toggleFav(id, e) {
+  e.stopPropagation();
+  favourites = favourites.includes(id)
+    ? favourites.filter(f => f !== id)
+    : [...favourites, id];
+  localStorage.setItem('evs-favourites', JSON.stringify(favourites));
+  renderRecipes(currentList);
+}
+
+// ── RECIPES DATA ─────────────────────────────────────────────────────────────
+const recipes = [
+  {
+    id: 'sambar', badge: 'Classic', region: 'Tamil Nadu', name: 'Sambar', tamil: 'சாம்பார்',
+    desc: 'The daily dal of South India. Toor dal cooked with tamarind, vegetables, and a fragrant homemade sambar powder.',
+    time: '35 min', serves: '4', level: 'Easy', emoji: '🫕', category: 'curry', bg: '#FDF0E0',
+    ingredients: ['Toor dal – 1/2 cup', 'Tamarind – small ball', 'Drumstick – 2, cut', 'Onion – 1 medium', 'Tomato – 1', 'Sambar powder – 2 tsp', 'Turmeric – 1/4 tsp', 'Mustard, curry leaves – tadka'],
+    steps: ['Cook toor dal with turmeric until completely soft. Mash well.', 'Soak tamarind in warm water, extract juice.', 'In a pot, add tamarind water with chopped vegetables and tomatoes. Boil 10 minutes.', 'Add mashed dal and sambar powder. Simmer 15 minutes.', 'In a small pan, heat oil. Add mustard seeds — let them pop. Add curry leaves and dried chilli. Pour tadka over sambar.', 'Finish with fresh coriander. Serve hot with rice, idli or dosa.']
+  },
+  {
+    id: 'dosa', badge: 'Breakfast', region: 'Pan South India', name: 'Masala Dosa', tamil: 'மசால தோசை',
+    desc: 'Crisp fermented rice-lentil crepe filled with spiced potato masala. The breakfast icon of South India.',
+    time: '45 min', serves: '6', level: 'Medium', emoji: '🫓', category: 'tiffin', bg: '#FEF8E0',
+    ingredients: ['Rice – 3 cups', 'Urad dal – 1 cup (soak & ferment overnight)', 'Potatoes – 3 large', 'Onion – 2, sliced', 'Green chilli – 2', 'Turmeric, mustard, curry leaves'],
+    steps: ['Grind soaked rice and dal. Ferment 8 hours.', 'Boil and mash potatoes. Sauté onions with mustard, curry leaves, turmeric. Mix with potatoes. Season.', 'Heat a cast iron tawa. Pour a ladle of batter. Spread in circles from center.', 'Drizzle oil around edges. Cook until golden and crisp.', 'Place potato masala on one side. Fold the dosa over.', 'Serve immediately with coconut chutney and sambar.']
+  },
+  {
+    id: 'pongal', badge: 'Festival', region: 'Tamil Nadu', name: 'Ven Pongal', tamil: 'வெண் பொங்கல்',
+    desc: 'Comforting rice and moong dal porridge, richly seasoned with ghee, pepper and cumin. Sacred harvest dish.',
+    time: '25 min', serves: '4', level: 'Easy', emoji: '🍚', category: 'rice', bg: '#FFFBEC',
+    ingredients: ['Raw rice – 1 cup', 'Yellow moong dal – 1/4 cup', 'Ghee – 3 tbsp', 'Black pepper – 1 tsp', 'Cumin – 1 tsp', 'Ginger – 1 inch piece', 'Cashews – handful', 'Curry leaves'],
+    steps: ['Dry roast moong dal until lightly fragrant.', 'Cook rice and dal together in 4 cups water until very soft.', 'In ghee, fry cashews golden. Add cumin, pepper, curry leaves, ginger.', 'Mix tempering into the cooked pongal.', 'Add more ghee and salt. Mix well until creamy.', 'Serve hot with sambar, coconut chutney and gotsu.']
+  },
+  {
+    id: 'fish', badge: 'Coastal', region: 'Kerala', name: 'Kerala Fish Curry', tamil: 'மீன் குழம்பு',
+    desc: 'Tangy, fiery fish curry cooked with coconut milk and kudampuli (Malabar tamarind) in a traditional claypot.',
+    time: '40 min', serves: '4', level: 'Medium', emoji: '🐟', category: 'curry', bg: '#FEF0E0',
+    ingredients: ['Fish – 500g (king fish or pomfret)', 'Kudampuli – 3 pieces, soaked', 'Coconut milk – 1 cup', 'Shallots – 10', 'Green chilli – 4', 'Ginger, garlic – 1 inch each', 'Red chilli powder – 2 tsp', 'Coconut oil – 3 tbsp'],
+    steps: ['Heat coconut oil in a claypot or thick-bottomed pan.', 'Add shallots and sauté until translucent.', 'Add ginger, garlic, green chilli. Fry 2 minutes.', 'Add chilli powder and turmeric. Stir on low heat.', 'Add soaked kudampuli with its water. Bring to boil.', 'Add fish pieces. Gently simmer 10 minutes.', 'Pour in coconut milk. Simmer 5 more minutes. Serve with rice.']
+  },
+  {
+    id: 'biriyani', badge: 'Special', region: 'Tamil Nadu', name: 'Ambur Biriyani', tamil: 'ஆம்பூர் பிரியாணி',
+    desc: 'The legendary Ambur-style biriyani — short-grain seeraga samba rice slow-cooked with mutton in a unique spice profile.',
+    time: '90 min', serves: '5', level: 'Advanced', emoji: '🍖', category: 'rice', bg: '#FEF0DE',
+    ingredients: ['Seeraga samba rice – 2 cups', 'Mutton – 500g', 'Curd – 1/2 cup', 'Tomatoes – 3', 'Cinnamon, cloves, cardamom', 'Mint and coriander', 'Ghee and oil – 4 tbsp each', 'Ambur-style spice mix'],
+    steps: ['Marinate mutton in curd, salt and turmeric for 1 hour.', 'Heat oil + ghee. Fry whole spices, then onions golden.', 'Add tomatoes and cook down to a paste. Add marinated mutton.', 'Cook mutton on high heat, then cover and simmer 30 minutes.', 'Par-boil rice separately, drain at 70% done.', 'Layer rice over mutton gravy. Scatter mint and fried onions.', 'Seal the pot with dough or foil. Dum cook on low heat 25 minutes.', 'Open, mix gently, serve with raita and brinjal curry.']
+  },
+  {
+    id: 'kollu', badge: 'Winter Staple', region: 'Tamil Nadu', name: 'Kollu Rasam', tamil: 'கொள்ளு ரசம்',
+    desc: 'Horse gram rasam — deeply nutritious and bursting with flavour. A potent, tangy, spiced soup served on a traditional Tamil meal plate.',
+    time: '40 min', serves: '4', level: 'Easy', emoji: '🍵', category: 'rasam', bg: '#FDF0E8',
+    ingredients: ['Horse gram (kollu) – 1/2 cup, pressure-cooked', 'Tamarind – gooseberry-sized ball', 'Tomatoes – 2 medium', 'Rasam powder – 1.5 tsp', 'Turmeric – 1/4 tsp', 'Mustard seeds, cumin – tadka', 'Dried red chilli – 2', 'Curry leaves, coriander – to finish'],
+    steps: ['Pressure cook horse gram with 2 cups water for 4–5 whistles. Strain and reserve both cooked gram and the stock.', 'Soak tamarind in 1 cup warm water. Extract the juice and discard the pulp.', 'In a pot, combine tamarind juice, crushed tomatoes, turmeric and rasam powder. Bring to a rolling boil for 5 minutes.', 'Add the horse gram stock. Simmer on medium heat for 10 minutes until the raw smell of tamarind disappears.', 'Adjust salt. The rasam should be thin and soup-like — not thick.', 'Heat oil in a small ladle. Add mustard seeds and let them pop. Add cumin, dried chilli and curry leaves. Pour tadka into the rasam.', 'Finish with fresh coriander. Serve piping hot with rice or as a soup.']
+  },
+  {
+    id: 'payasam', badge: 'Festival Sweet', region: 'Tamil Nadu', name: 'Semiya Payasam', tamil: 'சேமியா பாயசம்',
+    desc: 'Vermicelli cooked in fragrant milk, sweetened with sugar, cardamom, and enriched with golden cashews and raisins.',
+    time: '30 min', serves: '6', level: 'Easy', emoji: '🍮', category: 'sweets', bg: '#FFF8F0',
+    ingredients: ['Vermicelli – 1 cup', 'Full cream milk – 1 litre', 'Sugar – 1/2 cup', 'Cardamom – 4 pods, ground', 'Ghee – 2 tbsp', 'Cashews – 15', 'Raisins – 2 tbsp', 'Saffron – a pinch (optional)'],
+    steps: ['Heat ghee in a heavy pan. Fry cashews until golden. Remove. Fry raisins till they plump. Remove.', 'In the same ghee, roast vermicelli until lightly golden.', 'Bring milk to boil in a wide pan. Add roasted vermicelli.', 'Cook on medium heat, stirring frequently, until vermicelli is soft.', 'Add sugar and cardamom. Stir until sugar dissolves.', 'Garnish with cashews, raisins and saffron. Serve warm or chilled.']
+  },
+  {
+    id: 'laddu', badge: 'Family Recipe', region: 'Tamil Nadu', name: 'Boondi Laddu', tamil: 'பூந்தி லட்டு',
+    desc: 'Crispy besan boondi soaked in half-string sugar syrup, rolled into golden festival laddus. A treasured family recipe.',
+    time: '60 min', serves: '20', level: 'Medium', emoji: '🟡', category: 'sweets', bg: '#FFF5E0', photo: 'data:image/jpeg;base64,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',
+    ingredients: [
+      'Besan (chickpea flour) – 4 cups (800g)',
+      'Maida – 50g',
+      'Water – 3 cups (for batter)',
+      'Sugar – 4 cups (800g)',
+      'Water – 3 cups (for syrup)',
+      'Cardamom powder – 1 tsp',
+      'Cashews – handful, fried in ghee',
+      'Raisins – 2 tbsp, fried in ghee',
+      'Ghee – for frying boondi',
+      'Orange food colour – a pinch (optional)'
+    ],
+    steps: [
+      'Mix besan, maida and water into a smooth lump-free batter (1 cup = 200g). It should flow easily through a ladle with holes.',
+      'Heat ghee in a deep pan. Hold a perforated ladle or boondi jhara above the oil and pour batter through it in circular motions to form tiny droplets.',
+      'Fry the boondi on medium heat until just cooked — pale golden, not crispy. Remove and drain. Do not over-fry.',
+      'For the syrup: combine sugar and 3 cups water in a wide pan. Bring to boil, stirring until sugar dissolves.',
+      'Continue boiling for ~20 minutes until it reaches half-string (aadhara kambi) consistency — dip a spoon, let it cool slightly, and press between thumb and finger; it should form a thin half-string.',
+      'Remove syrup from heat. Immediately add all the fried boondi and mix well so every piece is coated. Add cardamom powder, fried cashews and raisins.',
+      'Let it rest 5–10 minutes until the boondi absorbs the syrup and becomes soft enough to shape.',
+      'Grease your palms with ghee. While still warm, take a handful of the mixture and press and roll firmly into round balls. Work quickly before it cools.',
+      'Place laddus on a plate to set. They firm up as they cool. Store in an airtight container for up to 2 weeks.'
+    ]
+  }
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let currentList = recipes;
+let activeCategory = null;
+
+// ── RENDER CARDS ──────────────────────────────────────────────────────────────
+function buildCard(r) {
+  const isFaved = favourites.includes(r.id);
+  return `<div class="recipe-card" onclick="openModal('${r.id}')">
+    <div class="recipe-img" style="background:${r.bg}; position:relative; overflow:hidden;">
+      ${r.photo ? `<img src='${r.photo}' style='width:100%;height:100%;object-fit:cover;position:absolute;inset:0;' alt='${r.name}'>` : `<span>${r.emoji}</span>`}
+      <span class="recipe-badge">${r.badge}</span>
+      <button class="fav-btn ${isFaved ? 'faved' : ''}" onclick="toggleFav('${r.id}', event)" title="${isFaved ? 'Remove from favourites' : 'Add to favourites'}">
+        ${isFaved ? '❤️' : '🤍'}
+      </button>
+    </div>
+    <div class="recipe-body">
+      <p class="recipe-region">${r.region}</p>
+      <h3 class="recipe-name">${r.name}</h3>
+      <p class="recipe-desc">${r.desc}</p>
+      <div class="recipe-meta">
+        <span><span class="meta-icon">⏱</span> ${r.time}</span>
+        <span><span class="meta-icon">👤</span> Serves ${r.serves}</span>
+        <span><span class="meta-icon">📊</span> ${r.level}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderRecipes(list) {
+  currentList = list;
+  const grid = document.getElementById('recipeGrid');
+  if (!list.length) {
+    grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:var(--warm-gray);padding:3rem 0">No recipes found. Try a different search.</p>`;
+  } else {
+    grid.innerHTML = list.map(buildCard).join('');
+  }
+}
+
+renderRecipes(recipes);
+
+// ── SEARCH ────────────────────────────────────────────────────────────────────
+function filterCards() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const base = activeCategory ? recipes.filter(r => r.category === activeCategory) : recipes;
+  renderRecipes(base.filter(r =>
+    r.name.toLowerCase().includes(q) ||
+    r.region.toLowerCase().includes(q) ||
+    r.desc.toLowerCase().includes(q) ||
+    r.category.includes(q)
+  ));
+}
+
+// ── CATEGORY FILTER ───────────────────────────────────────────────────────────
+function filterRecipes(cat) {
+  activeCategory = cat;
+  document.getElementById('searchInput').value = '';
+  document.querySelectorAll('.category-card').forEach(el => {
+    el.classList.toggle('active', el.getAttribute('onclick') === `filterRecipes('${cat}')`);
+  });
+  document.getElementById('filterReset').classList.remove('hidden');
+  document.querySelector('#recipes').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => {
+    const filtered = recipes.filter(r => r.category === cat);
+    renderRecipes(filtered.length ? filtered : recipes);
+  }, 400);
+}
+
+function resetFilter() {
+  activeCategory = null;
+  document.querySelectorAll('.category-card').forEach(el => el.classList.remove('active'));
+  document.getElementById('filterReset').classList.add('hidden');
+  document.getElementById('searchInput').value = '';
+  renderRecipes(recipes);
+  document.querySelector('#recipes').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── MODAL ─────────────────────────────────────────────────────────────────────
+function openModal(id) {
+  const r = recipes.find(x => x.id === id);
+  if (!r) return;
+  const isFaved = favourites.includes(r.id);
+  document.getElementById('modalTitle').textContent = r.name;
+  document.getElementById('modalTamil').textContent = r.tamil;
+  document.getElementById('modalBody').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:1.5rem">
+      <div>
+        <p class="ingredients-title">Ingredients</p>
+        <ul class="ingredients-list">${r.ingredients.map(i=>`<li>${i}</li>`).join('')}</ul>
+      </div>
+      <div style="background:var(--cream);padding:1rem;font-size:0.82rem;color:var(--warm-gray)">
+        <p style="font-family:'Playfair Display',serif;font-size:0.9rem;color:var(--tamarind);margin-bottom:0.75rem">Recipe Details</p>
+        <p>⏱ Cook time: <strong>${r.time}</strong></p>
+        <p>👤 Serves: <strong>${r.serves}</strong></p>
+        <p>📊 Difficulty: <strong>${r.level}</strong></p>
+        <p>📍 Region: <strong>${r.region}</strong></p>
+        <button onclick="toggleFav('${r.id}', event); this.textContent = favourites.includes('${r.id}') ? '❤️ Saved' : '🤍 Save Recipe'" 
+          style="margin-top:1rem;background:var(--saffron);color:#fff;border:none;padding:0.5rem 1rem;font-family:'Lato',sans-serif;font-size:0.8rem;cursor:pointer;width:100%">
+          ${isFaved ? '❤️ Saved' : '🤍 Save Recipe'}
+        </button>
+        <button onclick="window.print()" 
+          style="margin-top:0.5rem;background:none;color:var(--warm-gray);border:1px solid var(--border);padding:0.5rem 1rem;font-family:'Lato',sans-serif;font-size:0.8rem;cursor:pointer;width:100%">
+          🖨 Print Recipe
+        </button>
+      </div>
+    </div>
+    <p class="ingredients-title">Method</p>
+    <ol class="steps-list">${r.steps.map((s,i)=>`<li class="step"><span class="step-num">${i+1}</span><span class="step-text">${s}</span></li>`).join('')}</ol>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modalOverlay') && !e.target.classList.contains('modal-close')) return;
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal({target: document.getElementById('modalOverlay')}); });
+
+// ── MOBILE NAV ────────────────────────────────────────────────────────────────
+function toggleNav() {
+  const nav = document.getElementById('navLinks');
+  const ham = document.getElementById('hamburger');
+  nav.classList.toggle('open');
+  ham.classList.toggle('open');
+}
+function closeNav() {
+  document.getElementById('navLinks').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+// ── ADMIN: load custom recipes from localStorage ──────────────────────────────
+function loadCustomRecipes() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('evs-custom-recipes') || '[]');
+    return saved;
+  } catch { return []; }
+}
+
+function allRecipes() {
+  return [...recipes, ...loadCustomRecipes()];
+}
+
+// Override renderRecipes to use allRecipes by default
+const _origRender = renderRecipes;
+renderRecipes(allRecipes());
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════
+     ADMIN PANEL
+═══════════════════════════════════════════════════════════════════════════ -->
+<style>
+  #adminPanel {
+    display: none;
+    position: fixed; inset: 0; z-index: 10000;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+    overflow-y: auto; padding: 2rem 1rem;
+  }
+  #adminPanel.open { display: flex; align-items: flex-start; justify-content: center; }
+  .admin-box {
+    background: #fff; width: 100%; max-width: 680px;
+    padding: 2.5rem; position: relative;
+    font-family: 'Lato', sans-serif;
+  }
+  .admin-title {
+    font-family: 'Playfair Display', serif;
+    color: var(--tamarind); font-size: 1.5rem; margin-bottom: 0.25rem;
+  }
+  .admin-sub { color: var(--warm-gray); font-size: 0.82rem; margin-bottom: 2rem; }
+  .admin-close {
+    position: absolute; top: 1.25rem; right: 1.25rem;
+    background: none; border: none; font-size: 1.5rem;
+    cursor: pointer; color: var(--warm-gray);
+  }
+  .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .admin-field { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0.75rem; }
+  .admin-field.full { grid-column: 1 / -1; }
+  .admin-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--tamarind); }
+  .admin-input, .admin-select, .admin-textarea {
+    border: 1px solid var(--border); padding: 0.65rem 0.85rem;
+    font-family: 'Lato', sans-serif; font-size: 0.9rem;
+    color: var(--ink); background: #fafafa; outline: none;
+    transition: border-color 0.2s;
+  }
+  .admin-input:focus, .admin-select:focus, .admin-textarea:focus { border-color: var(--saffron); background: #fff; }
+  .admin-textarea { resize: vertical; min-height: 80px; }
+  .admin-photo-area {
+    border: 2px dashed var(--border); padding: 1.5rem;
+    text-align: center; cursor: pointer; transition: border-color 0.2s;
+    position: relative; background: #fafafa;
+  }
+  .admin-photo-area:hover { border-color: var(--saffron); }
+  .admin-photo-area input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+  .admin-photo-preview { max-height: 140px; object-fit: cover; width: 100%; display: none; margin-top: 0.75rem; }
+  .admin-photo-label { font-size: 0.82rem; color: var(--warm-gray); }
+  .admin-btn {
+    background: var(--saffron); color: #fff; border: none;
+    padding: 0.85rem 2rem; font-family: 'Lato', sans-serif;
+    font-size: 0.9rem; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; cursor: pointer; margin-top: 1.25rem;
+    transition: background 0.2s; width: 100%;
+  }
+  .admin-btn:hover { background: #c9540a; }
+  .admin-btn.secondary {
+    background: none; color: var(--tamarind);
+    border: 1px solid var(--tamarind); margin-top: 0.5rem;
+  }
+  .admin-btn.secondary:hover { background: var(--tamarind); color: #fff; }
+  .admin-success {
+    display: none; background: #f0faf0; border: 1px solid #4caf50;
+    color: #2e7d32; padding: 0.85rem 1rem; margin-top: 1rem;
+    font-size: 0.85rem;
+  }
+  .admin-success.show { display: block; }
+  .admin-recipes-list { margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
+  .admin-recipe-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.65rem 0; border-bottom: 1px solid var(--border);
+    font-size: 0.85rem;
+  }
+  .admin-recipe-item span { color: var(--warm-gray); font-size: 0.75rem; margin-left: 0.5rem; }
+  .admin-delete {
+    background: none; border: none; color: #e74c3c;
+    cursor: pointer; font-size: 0.8rem; padding: 0.25rem 0.5rem;
+  }
+  .admin-trigger {
+    position: fixed; bottom: 1.5rem; right: 1.5rem;
+    background: var(--tamarind); color: #fff; border: none;
+    width: 48px; height: 48px; border-radius: 50%;
+    font-size: 1.2rem; cursor: pointer; z-index: 9000;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    display: none; align-items: center; justify-content: center;
+    transition: transform 0.2s;
+  }
+  .admin-trigger:hover { transform: scale(1.1); }
+  .admin-trigger.visible { display: flex; }
+  @media (max-width: 600px) {
+    .admin-grid { grid-template-columns: 1fr; }
+    .admin-field.full { grid-column: 1; }
+  }
+</style>
+
+<!-- Floating admin button (only visible in admin mode) -->
+<button class="admin-trigger" id="adminTrigger" onclick="openAdmin()" title="Add Recipe">＋</button>
+
+<!-- Admin panel modal -->
+<div id="adminPanel">
+  <div class="admin-box">
+    <button class="admin-close" onclick="closeAdmin()">✕</button>
+    <div class="admin-title">Add New Recipe</div>
+    <p class="admin-sub">Recipes are saved in the browser and appear on the site immediately.</p>
+
+    <div class="admin-grid">
+      <div class="admin-field">
+        <label class="admin-label">Recipe Name (English)</label>
+        <input class="admin-input" id="aName" placeholder="e.g. Puli Kuzhambu">
+      </div>
+      <div class="admin-field">
+        <label class="admin-label">Tamil Name</label>
+        <input class="admin-input" id="aTamil" placeholder="e.g. புளி குழம்பு">
+      </div>
+      <div class="admin-field">
+        <label class="admin-label">Category</label>
+        <select class="admin-select" id="aCategory">
+          <option value="curry">Curry & Gravies</option>
+          <option value="rice">Rice Dishes</option>
+          <option value="tiffin">Tiffin & Breakfast</option>
+          <option value="sweets">Sweets & Desserts</option>
+          <option value="rasam">Rasam & Soups</option>
+          <option value="snacks">Snacks</option>
+          <option value="chutney">Chutneys & Sides</option>
+        </select>
+      </div>
+      <div class="admin-field">
+        <label class="admin-label">Region</label>
+        <input class="admin-input" id="aRegion" placeholder="e.g. Tamil Nadu">
+      </div>
+      <div class="admin-field">
+        <label class="admin-label">Cook Time</label>
+        <input class="admin-input" id="aTime" placeholder="e.g. 30 min">
+      </div>
+      <div class="admin-field">
+        <label class="admin-label">Serves</label>
+        <input class="admin-input" id="aServes" placeholder="e.g. 4">
+      </div>
+      <div class="admin-field">
+        <label class="admin-label">Difficulty</label>
+        <select class="admin-select" id="aLevel">
+          <option>Easy</option>
+          <option>Medium</option>
+          <option>Advanced</option>
+        </select>
+      </div>
+      <div class="admin-field">
+        <label class="admin-label">Badge Label</label>
+        <input class="admin-input" id="aBadge" placeholder="e.g. Family Recipe">
+      </div>
+      <div class="admin-field full">
+        <label class="admin-label">Short Description</label>
+        <input class="admin-input" id="aDesc" placeholder="One-line description of the dish...">
+      </div>
+      <div class="admin-field full">
+        <label class="admin-label">Ingredients (one per line)</label>
+        <textarea class="admin-textarea" id="aIngredients" placeholder="Toor dal – 1/2 cup&#10;Tamarind – small ball&#10;Tomato – 1"></textarea>
+      </div>
+      <div class="admin-field full">
+        <label class="admin-label">Method / Steps (one per line)</label>
+        <textarea class="admin-textarea" id="aSteps" style="min-height:120px" placeholder="Cook toor dal with turmeric until soft.&#10;Soak tamarind in warm water..."></textarea>
+      </div>
+      <div class="admin-field full">
+        <label class="admin-label">Photo (optional)</label>
+        <div class="admin-photo-area" onclick="document.getElementById('aPhoto').click()">
+          <input type="file" id="aPhoto" accept="image/*" onchange="previewPhoto(event)">
+          <div class="admin-photo-label">📷 Click to upload a photo</div>
+          <img id="aPhotoPreview" class="admin-photo-preview">
+        </div>
+      </div>
+    </div>
+
+    <button class="admin-btn" onclick="saveRecipe()">Save Recipe to Site</button>
+    <button class="admin-btn secondary" onclick="exportHTML()">⬇ Export & Download index.html</button>
+    <div class="admin-success" id="adminSuccess">✅ Recipe saved! It's now live on the site.</div>
+
+    <div class="admin-recipes-list" id="adminRecipesList"></div>
+  </div>
+</div>
+
+<script>
+// ── ADMIN AUTH ────────────────────────────────────────────────────────────────
+const ADMIN_PASSWORD = 'admin2025'; // change this!
+
+function initAdmin() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('admin') === 'true') {
+    const pwd = prompt('Admin password:');
+    if (pwd === ADMIN_PASSWORD) {
+      sessionStorage.setItem('evs-admin', 'true');
+    } else {
+      alert('Incorrect password.');
+      return;
+    }
+  }
+  if (sessionStorage.getItem('evs-admin') === 'true') {
+    document.getElementById('adminTrigger').classList.add('visible');
+  }
+}
+initAdmin();
+
+// ── ADMIN OPEN/CLOSE ──────────────────────────────────────────────────────────
+function openAdmin() {
+  document.getElementById('adminPanel').classList.add('open');
+  renderAdminList();
+}
+function closeAdmin() {
+  document.getElementById('adminPanel').classList.remove('open');
+}
+
+// ── PHOTO PREVIEW ─────────────────────────────────────────────────────────────
+let adminPhotoData = null;
+function previewPhoto(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    // Compress via canvas
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const max = 600;
+      let w = img.width, h = img.height;
+      if (w > h && w > max) { h = h * max / w; w = max; }
+      else if (h > max) { w = w * max / h; h = max; }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      adminPhotoData = canvas.toDataURL('image/jpeg', 0.75);
+      const preview = document.getElementById('aPhotoPreview');
+      preview.src = adminPhotoData;
+      preview.style.display = 'block';
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+// ── SAVE RECIPE ───────────────────────────────────────────────────────────────
+function saveRecipe() {
+  const name = document.getElementById('aName').value.trim();
+  const tamil = document.getElementById('aTamil').value.trim();
+  const category = document.getElementById('aCategory').value;
+  const region = document.getElementById('aRegion').value.trim() || 'Tamil Nadu';
+  const time = document.getElementById('aTime').value.trim() || '30 min';
+  const serves = document.getElementById('aServes').value.trim() || '4';
+  const level = document.getElementById('aLevel').value;
+  const badge = document.getElementById('aBadge').value.trim() || 'Home Recipe';
+  const desc = document.getElementById('aDesc').value.trim();
+  const ingredients = document.getElementById('aIngredients').value.trim().split('\n').filter(Boolean);
+  const steps = document.getElementById('aSteps').value.trim().split('\n').filter(Boolean);
+
+  if (!name || !desc || !ingredients.length || !steps.length) {
+    alert('Please fill in Name, Description, Ingredients and Steps at minimum.');
+    return;
+  }
+
+  const bgColors = { curry: '#FDF0E0', rice: '#FFFBEC', tiffin: '#FEF8E0', sweets: '#FFF8F0', rasam: '#FDF0E8', snacks: '#F0F8FF', chutney: '#F0FFF0' };
+  const emojis = { curry: '🫕', rice: '🍚', tiffin: '🫓', sweets: '🍮', rasam: '🍵', snacks: '🥨', chutney: '🫙' };
+
+  const recipe = {
+    id: 'custom_' + Date.now(),
+    badge, region, name, tamil, desc,
+    time, serves, level,
+    emoji: emojis[category] || '🍽',
+    category,
+    bg: bgColors[category] || '#FDF0E0',
+    ingredients, steps,
+    photo: adminPhotoData || null
+  };
+
+  const saved = loadCustomRecipes();
+  saved.push(recipe);
+  localStorage.setItem('evs-custom-recipes', JSON.stringify(saved));
+
+  // Refresh grid
+  renderRecipes(allRecipes());
+  renderAdminList();
+
+  // Reset form
+  document.getElementById('aName').value = '';
+  document.getElementById('aTamil').value = '';
+  document.getElementById('aDesc').value = '';
+  document.getElementById('aIngredients').value = '';
+  document.getElementById('aSteps').value = '';
+  document.getElementById('aPhoto').value = '';
+  document.getElementById('aPhotoPreview').style.display = 'none';
+  adminPhotoData = null;
+
+  document.getElementById('adminSuccess').classList.add('show');
+  setTimeout(() => document.getElementById('adminSuccess').classList.remove('show'), 3000);
+}
+
+// ── ADMIN RECIPE LIST ─────────────────────────────────────────────────────────
+function renderAdminList() {
+  const saved = loadCustomRecipes();
+  const el = document.getElementById('adminRecipesList');
+  if (!saved.length) { el.innerHTML = ''; return; }
+  el.innerHTML = `
+    <p style="font-size:0.8rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--tamarind);margin-bottom:0.75rem">
+      Saved Recipes (${saved.length})
+    </p>
+    ${saved.map(r => `
+      <div class="admin-recipe-item">
+        <div>${r.name} <span>${r.category}</span></div>
+        <button class="admin-delete" onclick="deleteCustomRecipe('${r.id}')">🗑 Delete</button>
+      </div>
+    `).join('')}
+  `;
+}
+
+function deleteCustomRecipe(id) {
+  if (!confirm('Delete this recipe?')) return;
+  const saved = loadCustomRecipes().filter(r => r.id !== id);
+  localStorage.setItem('evs-custom-recipes', JSON.stringify(saved));
+  renderRecipes(allRecipes());
+  renderAdminList();
+}
+
+// ── EXPORT HTML ───────────────────────────────────────────────────────────────
+function exportHTML() {
+  const custom = loadCustomRecipes();
+  let html = document.documentElement.outerHTML;
+
+  // Inject custom recipes into the hardcoded array
+  const inject = custom.map(r => `\n  ${JSON.stringify(r)},`).join('');
+  html = html.replace('// ── STATE', `// custom recipes baked in${inject}\n  // ── STATE`);
+
+  const blob = new Blob([html], { type: 'text/html' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'index.html';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+</script>
+</body>
+</html>
