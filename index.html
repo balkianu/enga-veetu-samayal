@@ -1,1 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enga Veetu Samayal – South Indian Recipes & Culinary Traditions</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Noto+Serif+Tamil:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  #password-gate {
+    position: fixed; inset: 0; z-index: 9999;
+    background: linear-gradient(135deg, var(--tamarind) 0%, #3D1A05 50%, #6B2D0F 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Lato', sans-serif;
+  }
+  .gate-box {
+    text-align: center; padding: 3rem 2.5rem;
+    border: 1px solid rgba(245,166,35,0.25);
+    background: rgba(0,0,0,0.25);
+    max-width: 380px; width: 90%;
+  }
+  .gate-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; color: var(--turmeric);
+    margin-bottom: 0.25rem;
+  }
+  .gate-logo span { color: #fff; font-style: italic; }
+  .gate-sub {
+    font-family: 'Noto Serif Tamil', serif;
+    font-size: 0.85rem; color: rgba(255,255,255,0.4);
+    margin-bottom: 2rem;
+  }
+  .gate-input {
+    width: 100%; padding: 0.85rem 1.25rem;
+    border: 1px solid rgba(245,166,35,0.3);
+    background: rgba(255,255,255,0.08);
+    color: #fff; font-family: 'Lato', sans-serif;
+    font-size: 1rem; text-align: center;
+    letter-spacing: 0.15em; outline: none;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s;
+  }
+  .gate-input::placeholder { color: rgba(255,255,255,0.25); letter-spacing: 0.05em; }
+  .gate-input:focus { border-color: var(--turmeric); }
+  .gate-input.shake {
+    animation: shake 0.4s ease;
+    border-color: #e74c3c !important;
+  }
+  .gate-btn {
+    width: 100%; padding: 0.85rem;
+    background: var(--saffron); color: #fff; border: none;
+    font-family: 'Lato', sans-serif; font-size: 0.9rem;
+    font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .gate-btn:hover { background: #c9540a; }
+  .gate-error {
+    font-size: 0.8rem; color: #e74c3c;
+    margin-top: 0.75rem; min-height: 1.2em;
+  }
+  .gate-hint { font-size: 0.72rem; color: rgba(255,255,255,0.25); margin-top: 1.5rem; }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+  }
+</style>
 
+<div id="password-gate">
+  <div class="gate-box">
+    <div class="gate-logo"><span>Enga Veetu</span> Samayal</div>
+    <div class="gate-sub">எங்க வீட்டு சமையல்</div>
+    <input type="password" class="gate-input" id="gateInput" placeholder="Enter password" onkeydown="if(event.key==='Enter') checkPassword()">
+    <button class="gate-btn" onclick="checkPassword()">Enter →</button>
+    <div class="gate-error" id="gateError"></div>
+    <div class="gate-hint">Family members only · Contact the admin for access</div>
+  </div>
+</div>
+
+<script>
+  // ── SET YOUR PASSWORD HERE ──────────────────────────────────────
+  const SITE_PASSWORD = 'samayal2025';
+  // ───────────────────────────────────────────────────────────────
+
+  // Check if already authenticated this session
+  if (sessionStorage.getItem('evs-auth') === 'true') {
+    document.getElementById('password-gate').style.display = 'none';
+  }
+
+  function checkPassword() {
+    const input = document.getElementById('gateInput');
+    const error = document.getElementById('gateError');
+    if (input.value === SITE_PASSWORD) {
+      sessionStorage.setItem('evs-auth', 'true');
+      const gate = document.getElementById('password-gate');
+      gate.style.transition = 'opacity 0.4s';
+      gate.style.opacity = '0';
+      setTimeout(() => gate.style.display = 'none', 400);
+    } else {
+      input.classList.remove('shake');
+      void input.offsetWidth; // retrigger animation
+      input.classList.add('shake');
+      input.value = '';
+      error.textContent = 'Incorrect password. Try again.';
+      setTimeout(() => { error.textContent = ''; input.classList.remove('shake'); }, 2000);
+    }
+  }
+</script>
+<style>
+  :root {
+    --saffron: #E8640A;
+    --turmeric: #F5A623;
+    --tamarind: #6B2D0F;
+    --coconut: #FEF9F0;
+    --leaf: #2D6A2D;
+    --cream: #FDF5E8;
+    --charcoal: #1A1209;
+    --warm-gray: #8B7355;
+    --border: rgba(107,45,15,0.15);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Lato', sans-serif;
+    background: var(--coconut);
+    color: var(--charcoal);
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--tamarind);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem;
+    height: 60px;
+    box-shadow: 0 2px 12px rgba(107,45,15,0.35);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    color: var(--turmeric);
+    letter-spacing: 0.03em;
+  }
+  .nav-logo span { color: #fff; font-style: italic; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--turmeric); }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--tamarind) 0%, #3D1A05 50%, #6B2D0F 100%);
+    min-height: 80vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 70% 50%, rgba(245,166,35,0.12) 0%, transparent 60%);
+  }
+  .hero-pattern {
+    position: absolute; right: 0; top: 0; bottom: 0; width: 50%;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23F5A623' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-text { padding: 4rem 3rem 4rem 5rem; position: relative; z-index: 2; }
+  .hero-eyebrow {
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--turmeric); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--turmeric); }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+  .hero-title em { color: var(--turmeric); font-style: italic; }
+  .hero-subtitle {
+    font-family: 'Noto Serif Tamil', serif;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 1.5rem;
+  }
+  .hero-desc {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.7);
+    max-width: 420px;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+  .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--saffron);
+    color: #fff;
+    border: none; padding: 0.75rem 2rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.9rem; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    cursor: pointer; text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #c9540a; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    color: rgba(255,255,255,0.85);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 0.75rem 2rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.9rem; font-weight: 400;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    cursor: pointer; text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--turmeric); color: var(--turmeric); }
+
+  .hero-visual {
+    position: relative; z-index: 2;
+    display: flex; align-items: center; justify-content: center;
+    padding: 3rem;
+  }
+  .hero-img-frame {
+    width: 360px; height: 420px;
+    background: rgba(245,166,35,0.1);
+    border: 1px solid rgba(245,166,35,0.25);
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-img-frame::before {
+    content: '';
+    position: absolute;
+    inset: -12px;
+    border: 1px solid rgba(245,166,35,0.1);
+  }
+  .hero-dish-placeholder {
+    text-align: center;
+    color: rgba(255,255,255,0.3);
+  }
+  .hero-dish-icon { font-size: 5rem; margin-bottom: 1rem; display: block; }
+  .hero-dish-label {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: rgba(245,166,35,0.6);
+  }
+
+  /* STATS STRIP */
+  .stats-strip {
+    background: var(--saffron);
+    display: flex;
+    justify-content: center;
+    gap: 0;
+  }
+  .stat-item {
+    padding: 1.25rem 3rem;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.2);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem; font-weight: 700;
+    color: #fff;
+    display: block;
+  }
+  .stat-label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.8); }
+
+  /* SECTIONS */
+  section { padding: 5rem 5rem; }
+  .section-header { text-align: center; margin-bottom: 3.5rem; }
+  .section-eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--saffron); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    color: var(--tamarind);
+    line-height: 1.2;
+  }
+  .section-sub {
+    font-size: 0.95rem; color: var(--warm-gray);
+    max-width: 480px; margin: 1rem auto 0;
+  }
+  .section-divider {
+    width: 60px; height: 3px;
+    background: linear-gradient(to right, var(--saffron), var(--turmeric));
+    margin: 1.25rem auto 0;
+  }
+
+  /* FEATURED CATEGORIES */
+  .categories-bg { background: var(--cream); }
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.5rem;
+  }
+  .category-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    padding: 2rem 1.25rem;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+  .category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(107,45,15,0.12);
+    border-color: var(--saffron);
+  }
+  .category-icon { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
+  .category-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 600;
+    color: var(--tamarind);
+    margin-bottom: 0.25rem;
+  }
+  .category-count { font-size: 0.75rem; color: var(--warm-gray); }
+
+  /* RECIPE CARDS */
+  .recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  .recipe-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .recipe-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(107,45,15,0.14);
+  }
+  .recipe-img {
+    height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .recipe-badge {
+    position: absolute; top: 12px; left: 12px;
+    background: var(--saffron);
+    color: #fff;
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 3px 10px;
+  }
+  .recipe-body { padding: 1.5rem; }
+  .recipe-region {
+    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--saffron); margin-bottom: 0.5rem;
+  }
+  .recipe-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 600;
+    color: var(--tamarind); margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+  .recipe-desc { font-size: 0.88rem; color: var(--warm-gray); line-height: 1.6; margin-bottom: 1rem; }
+  .recipe-meta {
+    display: flex; gap: 1rem;
+    font-size: 0.78rem; color: var(--warm-gray);
+    border-top: 1px solid var(--border); padding-top: 1rem;
+  }
+  .recipe-meta span { display: flex; align-items: center; gap: 0.3rem; }
+  .meta-icon { font-size: 0.85rem; }
+
+  /* TRADITIONS SECTION */
+  .traditions-bg { background: var(--tamarind); color: #fff; }
+  .traditions-bg .section-title { color: var(--turmeric); }
+  .traditions-bg .section-eyebrow { color: rgba(245,166,35,0.7); }
+  .traditions-bg .section-sub { color: rgba(255,255,255,0.6); }
+  .traditions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 1rem;
+  }
+  .tradition-item { display: flex; gap: 1.5rem; align-items: flex-start; }
+  .tradition-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; font-weight: 700;
+    color: rgba(245,166,35,0.2);
+    line-height: 1;
+    min-width: 48px;
+  }
+  .tradition-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 600;
+    color: var(--turmeric); margin-bottom: 0.5rem;
+  }
+  .tradition-text { font-size: 0.9rem; color: rgba(255,255,255,0.65); line-height: 1.75; }
+
+  /* SPICE GUIDE */
+  .spice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+  .spice-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .spice-card::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px;
+  }
+  .spice-card.s1::before { background: #E8640A; }
+  .spice-card.s2::before { background: #F5A623; }
+  .spice-card.s3::before { background: #6B2D0F; }
+  .spice-card.s4::before { background: #2D6A2D; }
+  .spice-card.s5::before { background: #C41E3A; }
+  .spice-card.s6::before { background: #8B4513; }
+  .spice-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+  .spice-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; font-weight: 600;
+    color: var(--tamarind); margin-bottom: 0.35rem;
+  }
+  .spice-tamil { font-family: 'Noto Serif Tamil', serif; font-size: 0.85rem; color: var(--warm-gray); margin-bottom: 0.5rem; }
+  .spice-use { font-size: 0.8rem; color: var(--warm-gray); line-height: 1.6; }
+
+  /* RECIPE SPOTLIGHT */
+  .spotlight { background: var(--cream); }
+  .spotlight-inner {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+  }
+  .spotlight-img {
+    background: linear-gradient(135deg, rgba(232,100,10,0.1), rgba(107,45,15,0.05));
+    border: 1px solid var(--border);
+    height: 380px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 7rem;
+    position: relative;
+  }
+  .spotlight-img::after {
+    content: 'Recipe of the Week';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: var(--saffron); color: #fff;
+    text-align: center; padding: 0.6rem;
+    font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .spotlight-tag {
+    display: inline-block;
+    background: rgba(232,100,10,0.1);
+    color: var(--saffron);
+    font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 4px 12px; margin-bottom: 1rem;
+  }
+  .spotlight-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700;
+    color: var(--tamarind); line-height: 1.2; margin-bottom: 0.5rem;
+  }
+  .spotlight-tamil {
+    font-family: 'Noto Serif Tamil', serif;
+    font-size: 1rem; color: var(--warm-gray); margin-bottom: 1.25rem;
+  }
+  .spotlight-desc { font-size: 0.95rem; color: var(--warm-gray); line-height: 1.8; margin-bottom: 2rem; }
+  .ingredients-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; color: var(--tamarind);
+    margin-bottom: 0.75rem; padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .ingredients-list { list-style: none; margin-bottom: 2rem; }
+  .ingredients-list li {
+    font-size: 0.88rem; color: var(--warm-gray);
+    padding: 0.3rem 0;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .ingredients-list li::before { content: '◆'; font-size: 0.4rem; color: var(--saffron); }
+
+  /* NEWSLETTER */
+  .newsletter { background: var(--saffron); text-align: center; padding: 4rem; }
+  .newsletter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; color: #fff; margin-bottom: 0.75rem;
+  }
+  .newsletter-sub { color: rgba(255,255,255,0.85); margin-bottom: 2rem; font-size: 0.95rem; }
+  .newsletter-form { display: flex; gap: 0; max-width: 480px; margin: 0 auto; }
+  .newsletter-input {
+    flex: 1; padding: 0.85rem 1.25rem;
+    border: none; font-family: 'Lato', sans-serif; font-size: 0.9rem;
+    outline: none; background: rgba(255,255,255,0.95);
+  }
+  .newsletter-btn {
+    background: var(--tamarind); color: #fff;
+    border: none; padding: 0.85rem 1.75rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.85rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .newsletter-btn:hover { background: #2A0E05; }
+
+  /* FOOTER */
+  footer {
+    background: #1A0C04;
+    color: rgba(255,255,255,0.5);
+    padding: 4rem 5rem 2rem;
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem; margin-bottom: 3rem;
+  }
+  .footer-brand .nav-logo { font-size: 1.4rem; display: block; margin-bottom: 1rem; }
+  .footer-brand p { font-size: 0.85rem; line-height: 1.7; }
+  .footer-col-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem; color: rgba(255,255,255,0.8);
+    margin-bottom: 1rem;
+  }
+  .footer-col-links { list-style: none; }
+  .footer-col-links li { margin-bottom: 0.5rem; }
+  .footer-col-links a {
+    color: rgba(255,255,255,0.45);
+    text-decoration: none; font-size: 0.82rem;
+    transition: color 0.2s;
+  }
+  .footer-col-links a:hover { color: var(--turmeric); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.78rem;
+  }
+  .footer-bottom a { color: var(--turmeric); text-decoration: none; }
+
+  /* Modal / Recipe Detail */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(26,12,4,0.85);
+    align-items: center; justify-content: center;
+    padding: 2rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--coconut); max-width: 760px; width: 100%;
+    max-height: 85vh; overflow-y: auto;
+    position: relative;
+  }
+  .modal-header {
+    background: var(--tamarind); padding: 2rem 2.5rem;
+    color: #fff;
+  }
+  .modal-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; }
+  .modal-tamil { font-family: 'Noto Serif Tamil', serif; color: rgba(255,255,255,0.6); margin-top: 0.3rem; }
+  .modal-body { padding: 2rem 2.5rem; }
+  .modal-close {
+    position: absolute; top: 1rem; right: 1rem;
+    background: rgba(255,255,255,0.15); border: none;
+    color: #fff; width: 32px; height: 32px;
+    font-size: 1.1rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .steps-list { list-style: none; }
+  .step {
+    display: flex; gap: 1rem; margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem; border-bottom: 1px solid var(--border);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    background: var(--saffron); color: #fff;
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+  }
+  .step-text { font-size: 0.9rem; color: var(--warm-gray); line-height: 1.7; }
+
+  /* Search */
+  .search-bar { max-width: 600px; margin: 0 auto 4rem; display: flex; }
+  .search-input {
+    flex: 1; padding: 1rem 1.5rem;
+    border: 2px solid var(--border); border-right: none;
+    font-family: 'Lato', sans-serif; font-size: 0.95rem;
+    background: #fff; outline: none; color: var(--charcoal);
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--saffron); }
+  .search-btn {
+    background: var(--saffron); color: #fff; border: none;
+    padding: 1rem 1.75rem; cursor: pointer;
+    font-size: 0.9rem; font-weight: 700; letter-spacing: 0.05em;
+    text-transform: uppercase; font-family: 'Lato', sans-serif;
+    transition: background 0.2s;
+  }
+  .search-btn:hover { background: #c9540a; }
+
+  /* HAMBURGER */
+  .hamburger {
+    display: none;
+    flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: rgba(255,255,255,0.85);
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* CATEGORY ACTIVE STATE */
+  .category-card.active {
+    border-color: var(--saffron);
+    box-shadow: 0 0 0 2px var(--saffron);
+    transform: translateY(-4px);
+  }
+  .filter-reset {
+    display: block; margin: 0 auto 2.5rem;
+    background: none; border: 1px solid var(--border);
+    color: var(--warm-gray); padding: 0.5rem 1.5rem;
+    font-family: 'Lato', sans-serif; font-size: 0.8rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .filter-reset:hover { border-color: var(--saffron); color: var(--saffron); }
+  .filter-reset.hidden { visibility: hidden; pointer-events: none; }
+
+  /* FAVOURITES */
+  .fav-btn {
+    position: absolute; top: 12px; right: 12px;
+    background: rgba(255,255,255,0.85); border: none;
+    width: 32px; height: 32px; border-radius: 50%;
+    font-size: 1rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s, background 0.2s;
+    z-index: 2;
+  }
+  .fav-btn:hover { transform: scale(1.15); }
+  .fav-btn.faved { background: #fff0f0; }
+
+  /* NEWSLETTER SUCCESS */
+  .newsletter-success {
+    display: none; color: #fff;
+    font-size: 1rem; margin-top: 1rem; letter-spacing: 0.05em;
+  }
+  .newsletter-success.show { display: block; }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .hero-text { padding: 3rem 2rem; }
+    section { padding: 3rem 1.5rem; }
+    .traditions-grid { grid-template-columns: 1fr; }
+    .spotlight-inner { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .stats-strip { flex-wrap: wrap; }
+    nav { padding: 0 1rem; }
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: 0.75rem; }
+    .hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute; top: 60px; left: 0; right: 0;
+      background: var(--tamarind);
+      flex-direction: column; gap: 0;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      z-index: 99;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a {
+      padding: 1rem 1.5rem; font-size: 0.85rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span>Enga Veetu</span> Samayal</div>
+  <div class="nav-links" id="navLinks">
+    <a href="#recipes" onclick="closeNav()">Recipes</a>
+    <a href="#traditions" onclick="closeNav()">Traditions</a>
+    <a href="#spices" onclick="closeNav()">Spice Guide</a>
+    <a href="#spotlight" onclick="closeNav()">Featured</a>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">Authentic South Indian Cooking</p>
+    <h1 class="hero-title">எங்க வீட்டு<br><em>Samayal</em></h1>
+    <p class="hero-subtitle">Our Home Kitchen</p>
+    <p class="hero-desc">Recipes passed down through generations — from the bustling kitchens of Tamil Nadu and Kerala to the spice-filled homes of Andhra and Karnataka. Every dish tells a story.</p>
+    <div class="hero-buttons">
+      <a href="#recipes" class="btn-primary">Explore Recipes</a>
+      <a href="#traditions" class="btn-outline">Our Traditions</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-pattern"></div>
+    <div class="hero-img-frame">
+      <div class="hero-dish-placeholder">
+        <span class="hero-dish-icon">🍛</span>
+        <span class="hero-dish-label">Kollu Rasam & Rice</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stat-item">
+    <span class="stat-number">250+</span>
+    <span class="stat-label">Recipes</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">5</span>
+    <span class="stat-label">Regional Cuisines</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">40+</span>
+    <span class="stat-label">Spice Profiles</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number">3</span>
+    <span class="stat-label">Generations</span>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section id="recipes" class="categories-bg">
+  <div class="section-header">
+    <p class="section-eyebrow">Browse by Category</p>
+    <h2 class="section-title">What are you cooking today?</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="category-grid">
+    <div class="category-card" onclick="filterRecipes('rice')">
+      <span class="category-icon">🍚</span>
+      <div class="category-name">Rice &amp; Biriyani</div>
+      <div class="category-count">48 recipes</div>
+    </div>
+    <div class="category-card" onclick="filterRecipes('curry')">
+      <span class="category-icon">🍛</span>
+      <div class="category-name">Curries &amp; Gravies</div>
+      <div class="category-count">65 recipes</div>
+    </div>
+    <div class="category-card" onclick="filterRecipes('tiffin')">
+      <span class="category-icon">🥞</span>
+      <div class="category-name">Tiffin &amp; Breakfast</div>
+      <div class="category-count">42 recipes</div>
+    </div>
+    <div class="category-card" onclick="filterRecipes('rasam')">
+      <span class="category-icon">🥣</span>
+      <div class="category-name">Rasam &amp; Soups</div>
+      <div class="category-count">29 recipes</div>
+    </div>
+    <div class="category-card" onclick="filterRecipes('sweets')">
+      <span class="category-icon">🍮</span>
+      <div class="category-name">Sweets &amp; Desserts</div>
+      <div class="category-count">37 recipes</div>
+    </div>
+    <div class="category-card" onclick="filterRecipes('chutney')">
+      <span class="category-icon">🫙</span>
+      <div class="category-name">Chutneys &amp; Pickles</div>
+      <div class="category-count">31 recipes</div>
+    </div>
+  </div>
+  <button class="filter-reset hidden" id="filterReset" onclick="resetFilter()">✕ Show All Recipes</button>
+</section>
+<section>
+  <div class="section-header">
+    <p class="section-eyebrow">Popular Recipes</p>
+    <h2 class="section-title">Beloved Family Favourites</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="search-bar">
+    <input type="text" class="search-input" id="searchInput" placeholder="Search recipes, ingredients, regions…" oninput="filterCards()">
+    <button class="search-btn">Search</button>
+  </div>
+  <div class="recipe-grid" id="recipeGrid">
+    <!-- Cards injected by JS -->
+  </div>
+</section>
+
+<!-- CULINARY TRADITIONS -->
+<section id="traditions" class="traditions-bg">
+  <div class="section-header">
+    <p class="section-eyebrow">More Than Just Food</p>
+    <h2 class="section-title">The Soul Behind the Samayal</h2>
+    <div class="section-divider" style="background: linear-gradient(to right, #F5A623, #fff3);"></div>
+    <p class="section-sub">South Indian cooking is woven with ritual, season, and story.</p>
+  </div>
+  <div class="traditions-grid">
+    <div class="tradition-item">
+      <div class="tradition-number">01</div>
+      <div>
+        <div class="tradition-title">The Morning Ritual</div>
+        <div class="tradition-text">Dawn begins in a South Indian kitchen with the hiss of mustard seeds in hot oil, the golden bloom of curry leaves, the filling fragrance of filter kaapi. Breakfast is never hurried — it is the sacred start of the day.</div>
+      </div>
+    </div>
+    <div class="tradition-item">
+      <div class="tradition-number">02</div>
+      <div>
+        <div class="tradition-title">Banana Leaf Feasts</div>
+        <div class="tradition-text">A proper sadya or virundu is served on a fresh banana leaf — items placed in a precise order, eaten with the right hand, each dish a counterpart to the next. The leaf itself is an ingredient in the experience.</div>
+      </div>
+    </div>
+    <div class="tradition-item">
+      <div class="tradition-number">03</div>
+      <div>
+        <div class="tradition-title">Festival Foods</div>
+        <div class="tradition-text">Pongal for Pongal, Kozhukattai for Vinayagar Chaturthi, Payasam for every auspicious moment — the calendar of South India is written in sweet and savoury offerings to gods and family alike.</div>
+      </div>
+    </div>
+    <div class="tradition-item">
+      <div class="tradition-number">04</div>
+      <div>
+        <div class="tradition-title">The Art of Tempering</div>
+        <div class="tradition-text">Tadka — or thalikkal — is not an afterthought. The precise moment of adding mustard, urad dal, dried chillies and asafoetida to shimmering oil transforms every dish, adding depth, texture and fragrance unmistakably South Indian.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPICE GUIDE -->
+<section id="spices" style="background: var(--cream)">
+  <div class="section-header">
+    <p class="section-eyebrow">Know Your Pantry</p>
+    <h2 class="section-title">Essential Spices of the South</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="spice-grid">
+    <div class="spice-card s1">
+      <div class="spice-icon">🌶️</div>
+      <div class="spice-name">Dried Red Chilli</div>
+      <div class="spice-tamil">காய்ந்த மிளகாய்</div>
+      <div class="spice-use">The backbone of heat. Used whole in tempering, ground for chilli powder. Kashmiri variety gives colour without excessive heat.</div>
+    </div>
+    <div class="spice-card s2">
+      <div class="spice-icon">🟡</div>
+      <div class="spice-name">Turmeric</div>
+      <div class="spice-tamil">மஞ்சள்</div>
+      <div class="spice-use">Sacred and medicinal. Used in almost every savoury preparation. Fresh root used in festive foods; powder in daily cooking.</div>
+    </div>
+    <div class="spice-card s3">
+      <div class="spice-icon">🌿</div>
+      <div class="spice-name">Curry Leaves</div>
+      <div class="spice-tamil">கறிவேப்பிலை</div>
+      <div class="spice-use">The defining aroma of South Indian cooking. Always used fresh. Added to hot oil at the start of any dish — never a garnish.</div>
+    </div>
+    <div class="spice-card s4">
+      <div class="spice-icon">⚫</div>
+      <div class="spice-name">Mustard Seeds</div>
+      <div class="spice-tamil">கடுகு</div>
+      <div class="spice-use">Added to nearly every dish via tadka. Wait for the pop — that is the moment when oil is ready and flavour blooms.</div>
+    </div>
+    <div class="spice-card s5">
+      <div class="spice-icon">🔴</div>
+      <div class="spice-name">Tamarind</div>
+      <div class="spice-tamil">புளி</div>
+      <div class="spice-use">The sour soul of Tamil cooking. Used in rasam, sambar, puliyodharai, and countless others. Buy in block form, soak and extract.</div>
+    </div>
+    <div class="spice-card s6">
+      <div class="spice-icon">🤍</div>
+      <div class="spice-name">Asafoetida</div>
+      <div class="spice-tamil">பெருங்காயம்</div>
+      <div class="spice-use">A pinch is all it takes. Pungent raw, transformative cooked. Essential in dal, rasam, and for those avoiding onion and garlic.</div>
+    </div>
+  </div>
+</section>
+
+<!-- RECIPE SPOTLIGHT -->
+<section id="spotlight" class="spotlight">
+  <div class="section-header">
+    <p class="section-eyebrow">Step-by-Step Guide</p>
+    <h2 class="section-title">Featured Recipe</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="spotlight-inner">
+    <div class="spotlight-img">🍲</div>
+    <div>
+      <span class="spotlight-tag">Tamil Nadu · Comfort Food</span>
+      <h3 class="spotlight-title">Kollu Rasam</h3>
+      <p class="spotlight-tamil">கொள்ளு ரசம்</p>
+      <p class="spotlight-desc">Horse gram rasam — deeply nutritious and bursting with flavour. This potent, tangy, spiced soup is a winter staple and is served as the second course on a traditional Tamil meal plate.</p>
+      <p class="ingredients-title">Key Ingredients</p>
+      <ul class="ingredients-list">
+        <li>Horse gram (kollu) — 1/2 cup, cooked</li>
+        <li>Tamarind — gooseberry-sized ball</li>
+        <li>Tomatoes — 2 medium</li>
+        <li>Rasam powder — 1.5 tsp</li>
+        <li>Mustard, cumin, dried chilli — for tadka</li>
+        <li>Curry leaves, coriander — to finish</li>
+      </ul>
+      <button class="btn-primary" onclick="openModal('kollu')">View Full Recipe →</button>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h2 class="newsletter-title">Weekly Recipes in Your Inbox</h2>
+  <p class="newsletter-sub">Seasonal dishes, festival specials, and grandmother's secrets — delivered every Friday.</p>
+  <div class="newsletter-form">
+    <input type="email" class="newsletter-input" id="newsletterEmail" placeholder="Your email address">
+    <button class="newsletter-btn" onclick="subscribeNewsletter()">Subscribe</button>
+  </div>
+  <p class="newsletter-success" id="newsletterSuccess">🎉 You're in! Expect your first recipe this Friday.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="nav-logo"><span>Enga Veetu</span> Samayal</span>
+      <p>Celebrating the culinary heritage of South India — one recipe, one story, one memory at a time.</p>
+    </div>
+    <div>
+      <p class="footer-col-title">Recipes</p>
+      <ul class="footer-col-links">
+        <li><a href="#">Tamil Nadu</a></li>
+        <li><a href="#">Kerala</a></li>
+        <li><a href="#">Andhra Pradesh</a></li>
+        <li><a href="#">Karnataka</a></li>
+        <li><a href="#">Telangana</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Learn</p>
+      <ul class="footer-col-links">
+        <li><a href="#">Spice Guide</a></li>
+        <li><a href="#">Cooking Techniques</a></li>
+        <li><a href="#">Festival Calendar</a></li>
+        <li><a href="#">Nutrition Notes</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">About</p>
+      <ul class="footer-col-links">
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Submit a Recipe</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Enga Veetu Samayal</span>
+    <span>Made with ❤️ and ½ tsp asafoetida</span>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <p class="modal-tamil" id="modalTamil"></p>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ── FAVOURITES ──────────────────────────────────────────────────────────────
+let favourites = JSON.parse(localStorage.getItem('evs-favourites') || '[]');
+function toggleFav(id, e) {
+  e.stopPropagation();
+  favourites = favourites.includes(id)
+    ? favourites.filter(f => f !== id)
+    : [...favourites, id];
+  localStorage.setItem('evs-favourites', JSON.stringify(favourites));
+  renderRecipes(currentList);
+}
+
+// ── RECIPES DATA ─────────────────────────────────────────────────────────────
+const recipes = [
+  {
+    id: 'sambar', badge: 'Classic', region: 'Tamil Nadu', name: 'Sambar', tamil: 'சாம்பார்',
+    desc: 'The daily dal of South India. Toor dal cooked with tamarind, vegetables, and a fragrant homemade sambar powder.',
+    time: '35 min', serves: '4', level: 'Easy', emoji: '🫕', category: 'curry', bg: '#FDF0E0',
+    ingredients: ['Toor dal – 1/2 cup', 'Tamarind – small ball', 'Drumstick – 2, cut', 'Onion – 1 medium', 'Tomato – 1', 'Sambar powder – 2 tsp', 'Turmeric – 1/4 tsp', 'Mustard, curry leaves – tadka'],
+    steps: ['Cook toor dal with turmeric until completely soft. Mash well.', 'Soak tamarind in warm water, extract juice.', 'In a pot, add tamarind water with chopped vegetables and tomatoes. Boil 10 minutes.', 'Add mashed dal and sambar powder. Simmer 15 minutes.', 'In a small pan, heat oil. Add mustard seeds — let them pop. Add curry leaves and dried chilli. Pour tadka over sambar.', 'Finish with fresh coriander. Serve hot with rice, idli or dosa.']
+  },
+  {
+    id: 'dosa', badge: 'Breakfast', region: 'Pan South India', name: 'Masala Dosa', tamil: 'மசால தோசை',
+    desc: 'Crisp fermented rice-lentil crepe filled with spiced potato masala. The breakfast icon of South India.',
+    time: '45 min', serves: '6', level: 'Medium', emoji: '🫓', category: 'tiffin', bg: '#FEF8E0',
+    ingredients: ['Rice – 3 cups', 'Urad dal – 1 cup (soak & ferment overnight)', 'Potatoes – 3 large', 'Onion – 2, sliced', 'Green chilli – 2', 'Turmeric, mustard, curry leaves'],
+    steps: ['Grind soaked rice and dal. Ferment 8 hours.', 'Boil and mash potatoes. Sauté onions with mustard, curry leaves, turmeric. Mix with potatoes. Season.', 'Heat a cast iron tawa. Pour a ladle of batter. Spread in circles from center.', 'Drizzle oil around edges. Cook until golden and crisp.', 'Place potato masala on one side. Fold the dosa over.', 'Serve immediately with coconut chutney and sambar.']
+  },
+  {
+    id: 'pongal', badge: 'Festival', region: 'Tamil Nadu', name: 'Ven Pongal', tamil: 'வெண் பொங்கல்',
+    desc: 'Comforting rice and moong dal porridge, richly seasoned with ghee, pepper and cumin. Sacred harvest dish.',
+    time: '25 min', serves: '4', level: 'Easy', emoji: '🍚', category: 'rice', bg: '#FFFBEC',
+    ingredients: ['Raw rice – 1 cup', 'Yellow moong dal – 1/4 cup', 'Ghee – 3 tbsp', 'Black pepper – 1 tsp', 'Cumin – 1 tsp', 'Ginger – 1 inch piece', 'Cashews – handful', 'Curry leaves'],
+    steps: ['Dry roast moong dal until lightly fragrant.', 'Cook rice and dal together in 4 cups water until very soft.', 'In ghee, fry cashews golden. Add cumin, pepper, curry leaves, ginger.', 'Mix tempering into the cooked pongal.', 'Add more ghee and salt. Mix well until creamy.', 'Serve hot with sambar, coconut chutney and gotsu.']
+  },
+  {
+    id: 'fish', badge: 'Coastal', region: 'Kerala', name: 'Kerala Fish Curry', tamil: 'மீன் குழம்பு',
+    desc: 'Tangy, fiery fish curry cooked with coconut milk and kudampuli (Malabar tamarind) in a traditional claypot.',
+    time: '40 min', serves: '4', level: 'Medium', emoji: '🐟', category: 'curry', bg: '#FEF0E0',
+    ingredients: ['Fish – 500g (king fish or pomfret)', 'Kudampuli – 3 pieces, soaked', 'Coconut milk – 1 cup', 'Shallots – 10', 'Green chilli – 4', 'Ginger, garlic – 1 inch each', 'Red chilli powder – 2 tsp', 'Coconut oil – 3 tbsp'],
+    steps: ['Heat coconut oil in a claypot or thick-bottomed pan.', 'Add shallots and sauté until translucent.', 'Add ginger, garlic, green chilli. Fry 2 minutes.', 'Add chilli powder and turmeric. Stir on low heat.', 'Add soaked kudampuli with its water. Bring to boil.', 'Add fish pieces. Gently simmer 10 minutes.', 'Pour in coconut milk. Simmer 5 more minutes. Serve with rice.']
+  },
+  {
+    id: 'laddu', badge: 'Family Recipe', region: 'Tamil Nadu', name: 'Boondi Laddu', tamil: 'பூந்தி லட்டு',
+    desc: 'Crispy besan boondi soaked in half-string sugar syrup, rolled into golden festival laddus. A treasured family recipe.',
+    time: '60 min', serves: '20', level: 'Medium', emoji: '🟡', category: 'sweets', bg: '#FFF5E0',
+    ingredients: [
+      'Besan (chickpea flour) – 4 cups (800g)',
+      'Maida – 50g',
+      'Water – 3 cups (for batter)',
+      'Sugar – 4 cups (800g)',
+      'Water – 3 cups (for syrup)',
+      'Cardamom powder – 1 tsp',
+      'Cashews – handful, fried in ghee',
+      'Raisins – 2 tbsp, fried in ghee',
+      'Ghee – for frying boondi',
+      'Orange food colour – a pinch (optional)'
+    ],
+    steps: [
+      'Mix besan, maida and water into a smooth lump-free batter (1 cup = 200g). It should flow easily through a ladle with holes.',
+      'Heat ghee in a deep pan. Hold a perforated ladle or boondi jhara above the oil and pour batter through it in circular motions to form tiny droplets.',
+      'Fry the boondi on medium heat until just cooked — pale golden, not crispy. Remove and drain. Do not over-fry.',
+      'For the syrup: combine sugar and 3 cups water in a wide pan. Bring to boil, stirring until sugar dissolves.',
+      'Continue boiling for ~20 minutes until it reaches half-string (aadhara kambi) consistency — dip a spoon, let it cool slightly, and press between thumb and finger; it should form a thin half-string.',
+      'Remove syrup from heat. Immediately add all the fried boondi and mix well so every piece is coated. Add cardamom powder, fried cashews and raisins.',
+      'Let it rest 5–10 minutes until the boondi absorbs the syrup and becomes soft enough to shape.',
+      'Grease your palms with ghee. While still warm, take a handful of the mixture and press and roll firmly into round balls. Work quickly before it cools.',
+      'Place laddus on a plate to set. They firm up as they cool. Store in an airtight container for up to 2 weeks.'
+    ]
+  },
+  {
+    id: 'payasam', badge: 'Festival Sweet', region: 'Tamil Nadu', name: 'Semiya Payasam', tamil: 'சேமியா பாயசம்',
+    desc: 'Vermicelli cooked in fragrant milk, sweetened with sugar, cardamom, and enriched with golden cashews and raisins.',
+    time: '30 min', serves: '6', level: 'Easy', emoji: '🍮', category: 'sweets', bg: '#FFF8F0',
+    ingredients: ['Vermicelli – 1 cup', 'Full cream milk – 1 litre', 'Sugar – 1/2 cup', 'Cardamom – 4 pods, ground', 'Ghee – 2 tbsp', 'Cashews – 15', 'Raisins – 2 tbsp', 'Saffron – a pinch (optional)'],
+    steps: ['Heat ghee in a heavy pan. Fry cashews until golden. Remove. Fry raisins till they plump. Remove.', 'In the same ghee, roast vermicelli until lightly golden.', 'Bring milk to boil in a wide pan. Add roasted vermicelli.', 'Cook on medium heat, stirring frequently, until vermicelli is soft.', 'Add sugar and cardamom. Stir until sugar dissolves.', 'Garnish with cashews, raisins and saffron. Serve warm or chilled.']
+  },
+  {
+    id: 'biriyani', badge: 'Special', region: 'Tamil Nadu', name: 'Ambur Biriyani', tamil: 'ஆம்பூர் பிரியாணி',
+    desc: 'The legendary Ambur-style biriyani — short-grain seeraga samba rice slow-cooked with mutton in a unique spice profile.',
+    time: '90 min', serves: '5', level: 'Advanced', emoji: '🍖', category: 'rice', bg: '#FEF0DE',
+    ingredients: ['Seeraga samba rice – 2 cups', 'Mutton – 500g', 'Curd – 1/2 cup', 'Tomatoes – 3', 'Cinnamon, cloves, cardamom', 'Mint and coriander', 'Ghee and oil – 4 tbsp each', 'Ambur-style spice mix'],
+    steps: ['Marinate mutton in curd, salt and turmeric for 1 hour.', 'Heat oil + ghee. Fry whole spices, then onions golden.', 'Add tomatoes and cook down to a paste. Add marinated mutton.', 'Cook mutton on high heat, then cover and simmer 30 minutes.', 'Par-boil rice separately, drain at 70% done.', 'Layer rice over mutton gravy. Scatter mint and fried onions.', 'Seal the pot with dough or foil. Dum cook on low heat 25 minutes.', 'Open, mix gently, serve with raita and brinjal curry.']
+  },
+  {
+    id: 'kollu', badge: 'Winter Staple', region: 'Tamil Nadu', name: 'Kollu Rasam', tamil: 'கொள்ளு ரசம்',
+    desc: 'Horse gram rasam — deeply nutritious and bursting with flavour. A potent, tangy, spiced soup served on a traditional Tamil meal plate.',
+    time: '40 min', serves: '4', level: 'Easy', emoji: '🍵', category: 'rasam', bg: '#FDF0E8',
+    ingredients: ['Horse gram (kollu) – 1/2 cup, pressure-cooked', 'Tamarind – gooseberry-sized ball', 'Tomatoes – 2 medium', 'Rasam powder – 1.5 tsp', 'Turmeric – 1/4 tsp', 'Mustard seeds, cumin – tadka', 'Dried red chilli – 2', 'Curry leaves, coriander – to finish'],
+    steps: ['Pressure cook horse gram with 2 cups water for 4–5 whistles. Strain and reserve both cooked gram and the stock.', 'Soak tamarind in 1 cup warm water. Extract the juice and discard the pulp.', 'In a pot, combine tamarind juice, crushed tomatoes, turmeric and rasam powder. Bring to a rolling boil for 5 minutes.', 'Add the horse gram stock. Simmer on medium heat for 10 minutes until the raw smell of tamarind disappears.', 'Adjust salt. The rasam should be thin and soup-like — not thick.', 'Heat oil in a small ladle. Add mustard seeds and let them pop. Add cumin, dried chilli and curry leaves. Pour tadka into the rasam.', 'Finish with fresh coriander. Serve piping hot with rice or as a soup.']
+  }
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let currentList = recipes;
+let activeCategory = null;
+
+// ── RENDER CARDS ──────────────────────────────────────────────────────────────
+function buildCard(r) {
+  const isFaved = favourites.includes(r.id);
+  return `<div class="recipe-card" onclick="openModal('${r.id}')">
+    <div class="recipe-img" style="background:${r.bg}; position:relative;">
+      <span>${r.emoji}</span>
+      <span class="recipe-badge">${r.badge}</span>
+      <button class="fav-btn ${isFaved ? 'faved' : ''}" onclick="toggleFav('${r.id}', event)" title="${isFaved ? 'Remove from favourites' : 'Add to favourites'}">
+        ${isFaved ? '❤️' : '🤍'}
+      </button>
+    </div>
+    <div class="recipe-body">
+      <p class="recipe-region">${r.region}</p>
+      <h3 class="recipe-name">${r.name}</h3>
+      <p class="recipe-desc">${r.desc}</p>
+      <div class="recipe-meta">
+        <span><span class="meta-icon">⏱</span> ${r.time}</span>
+        <span><span class="meta-icon">👤</span> Serves ${r.serves}</span>
+        <span><span class="meta-icon">📊</span> ${r.level}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderRecipes(list) {
+  currentList = list;
+  const grid = document.getElementById('recipeGrid');
+  if (!list.length) {
+    grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:var(--warm-gray);padding:3rem 0">No recipes found. Try a different search.</p>`;
+  } else {
+    grid.innerHTML = list.map(buildCard).join('');
+  }
+}
+
+renderRecipes(recipes);
+
+// ── SEARCH ────────────────────────────────────────────────────────────────────
+function filterCards() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const base = activeCategory ? recipes.filter(r => r.category === activeCategory) : recipes;
+  renderRecipes(base.filter(r =>
+    r.name.toLowerCase().includes(q) ||
+    r.region.toLowerCase().includes(q) ||
+    r.desc.toLowerCase().includes(q) ||
+    r.category.includes(q)
+  ));
+}
+
+// ── CATEGORY FILTER ───────────────────────────────────────────────────────────
+function filterRecipes(cat) {
+  activeCategory = cat;
+  document.getElementById('searchInput').value = '';
+  document.querySelectorAll('.category-card').forEach(el => {
+    el.classList.toggle('active', el.getAttribute('onclick') === `filterRecipes('${cat}')`);
+  });
+  document.getElementById('filterReset').classList.remove('hidden');
+  document.querySelector('#recipes').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => {
+    const filtered = recipes.filter(r => r.category === cat);
+    renderRecipes(filtered.length ? filtered : recipes);
+  }, 400);
+}
+
+function resetFilter() {
+  activeCategory = null;
+  document.querySelectorAll('.category-card').forEach(el => el.classList.remove('active'));
+  document.getElementById('filterReset').classList.add('hidden');
+  document.getElementById('searchInput').value = '';
+  renderRecipes(recipes);
+  document.querySelector('#recipes').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── MODAL ─────────────────────────────────────────────────────────────────────
+function openModal(id) {
+  const r = recipes.find(x => x.id === id);
+  if (!r) return;
+  const isFaved = favourites.includes(r.id);
+  document.getElementById('modalTitle').textContent = r.name;
+  document.getElementById('modalTamil').textContent = r.tamil;
+  document.getElementById('modalBody').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:1.5rem">
+      <div>
+        <p class="ingredients-title">Ingredients</p>
+        <ul class="ingredients-list">${r.ingredients.map(i=>`<li>${i}</li>`).join('')}</ul>
+      </div>
+      <div style="background:var(--cream);padding:1rem;font-size:0.82rem;color:var(--warm-gray)">
+        <p style="font-family:'Playfair Display',serif;font-size:0.9rem;color:var(--tamarind);margin-bottom:0.75rem">Recipe Details</p>
+        <p>⏱ Cook time: <strong>${r.time}</strong></p>
+        <p>👤 Serves: <strong>${r.serves}</strong></p>
+        <p>📊 Difficulty: <strong>${r.level}</strong></p>
+        <p>📍 Region: <strong>${r.region}</strong></p>
+        <button onclick="toggleFav('${r.id}', event); this.textContent = favourites.includes('${r.id}') ? '❤️ Saved' : '🤍 Save Recipe'" 
+          style="margin-top:1rem;background:var(--saffron);color:#fff;border:none;padding:0.5rem 1rem;font-family:'Lato',sans-serif;font-size:0.8rem;cursor:pointer;width:100%">
+          ${isFaved ? '❤️ Saved' : '🤍 Save Recipe'}
+        </button>
+        <button onclick="window.print()" 
+          style="margin-top:0.5rem;background:none;color:var(--warm-gray);border:1px solid var(--border);padding:0.5rem 1rem;font-family:'Lato',sans-serif;font-size:0.8rem;cursor:pointer;width:100%">
+          🖨 Print Recipe
+        </button>
+      </div>
+    </div>
+    <p class="ingredients-title">Method</p>
+    <ol class="steps-list">${r.steps.map((s,i)=>`<li class="step"><span class="step-num">${i+1}</span><span class="step-text">${s}</span></li>`).join('')}</ol>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modalOverlay') && !e.target.classList.contains('modal-close')) return;
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal({target: document.getElementById('modalOverlay')}); });
+
+// ── MOBILE NAV ────────────────────────────────────────────────────────────────
+function toggleNav() {
+  const nav = document.getElementById('navLinks');
+  const ham = document.getElementById('hamburger');
+  nav.classList.toggle('open');
+  ham.classList.toggle('open');
+}
+function closeNav() {
+  document.getElementById('navLinks').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+// ── NEWSLETTER ────────────────────────────────────────────────────────────────
+function subscribeNewsletter() {
+  const email = document.getElementById('newsletterEmail').value.trim();
+  if (!email || !email.includes('@')) {
+    document.getElementById('newsletterEmail').style.outline = '2px solid #fff';
+    setTimeout(() => document.getElementById('newsletterEmail').style.outline = '', 1500);
+    return;
+  }
+  document.querySelector('.newsletter-form').style.display = 'none';
+  document.getElementById('newsletterSuccess').classList.add('show');
+}
+</script>
+</body>
+</html>
